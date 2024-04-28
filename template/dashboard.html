@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1 class="text-center mt-4 mb-5">Reddit Dashboard</h1>
+      <form id="redditForm" class="text-center mb-4">
+        <div class="form-group">
+          <label for="subreddit">Choose a Subreddit:</label>
+          <select id="subreddit" name="subreddit" class="form-control">
+            <option value="askreddit">AskReddit</option>
+            <option value="worldnews">WorldNews</option>
+            <option value="science">Science</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div id="lineChart" class="chart card">
+            <h2 class="card-header">Line Chart</h2>
+            <div class="card-body">
+              <canvas id="lineChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div id="barChart" class="chart card">
+            <h2 class="card-header">Bar Chart</h2>
+            <div class="card-body">
+              <canvas id="barChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-lg-6">
+          <div id="pieChart" class="chart card">
+            <h2 class="card-header">Pie Chart</h2>
+            <div class="card-body">
+              <canvas id="pieChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div id="areaChart" class="chart card">
+            <h2 class="card-header">Area Chart</h2>
+            <div class="card-body">
+              <canvas id="areaChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/lineChart.js"></script>
+    <script src="../static/js/barChart.js"></script>
+    <script src="../static/js/pieChart.js"></script>
+    <script src="../static/js/areaChart.js"></script>
+  </body>
+</html>
