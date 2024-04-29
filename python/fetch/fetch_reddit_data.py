@@ -1,25 +1,19 @@
-# Example Python script to fetch data from Reddit using PRAW
-def fetch_reddit_data(subreddit):
-    reddit = praw.Reddit(client_id='your_client_id',
-                         client_secret='your_client_secret',
-                         user_agent='your_user_agent')
-    
-    # Example: Fetch 10 hot submissions from the subreddit
-    subreddit = reddit.subreddit(subreddit)
-    hot_submissions = subreddit.hot(limit=10)
+import imports
 
-    # Example: Process and return fetched data
-    fetched_data = []
-    for submission in hot_submissions:
-        fetched_data.append({
-            'title': submission.title,
-            'score': submission.score,
-            'url': submission.url
-        })
+def reddit_search(subreddit_name):
+    # Connect to Reddit
+    reddit = praw.Reddit(client_id='DP78tG9HeZiMQg', client_secret='xF80XIHboP51Lq63viNLTzxJrmE', user_agent='RedditWebScraping')
     
-    return fetched_data
+    # Get the subreddit
+    subreddit = reddit.subreddit(subreddit_name)
 
-# Example usage:
-# subreddit = 'askreddit'
-# fetched_data = fetch_reddit_data(subreddit)
-# print(fetched_data)
+    # Fetch hot posts from the subreddit
+    hot_posts = subreddit.hot(limit=10000)
+
+    # Store post data
+    posts = []
+    for post in hot_posts:
+        posts.append([post.title, post.score, post.id, post.subreddit, post.url, post.num_comments, post.selftext, post.created])
+    posts_df = pd.DataFrame(posts, columns=['Title', 'Score', 'ID', 'Subreddit', 'URL', 'Num Comments', 'Body', 'Created'])
+
+    return posts_df
