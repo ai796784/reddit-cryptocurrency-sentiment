@@ -7,8 +7,10 @@ $subreddit = $_POST['subreddit'];
 
 // Call the Python script with PRAW to fetch data from Reddit
 // Example:
-exec("python fetch_reddit_data.py $subreddit");
+$output = shell_exec("python ../python/fetch/reddit_search.py $subreddit_name");
 
+// Decode the JSON output
+$posts = json_decode($output);
 // Connect to the database
 $conn = connectDB();
 
