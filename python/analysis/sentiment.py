@@ -1,4 +1,4 @@
-from ..models.ensemble_model_loader import load_model
+from ..models.load_model import load_model
 
 sentiment_model = load_model()
 
