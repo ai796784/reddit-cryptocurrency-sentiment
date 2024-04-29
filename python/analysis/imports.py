@@ -1,2 +1,2 @@
 import numpy as np
-from load_model import ensemble_model
+from ..models.load_model import load_model
