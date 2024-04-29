@@ -15,4 +15,4 @@ def reddit_search(subreddit_name):
     for post in hot_posts:
         posts.append([post.title, post.score, post.id, post.subreddit, post.url, post.num_comments, post.selftext, post.created])
     
-    return posts
+    return json.dumps(posts)
