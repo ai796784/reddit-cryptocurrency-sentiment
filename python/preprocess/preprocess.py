@@ -1,4 +1,6 @@
-def preprocess_text_with_embedding(text):
+import imports
+
+def preprocess_text_with_tfidf(text):
     # Convert to lowercase
     text = text.lower()
 
@@ -28,11 +30,16 @@ def preprocess_text_with_embedding(text):
     lemmatizer = WordNetLemmatizer()
     tokens = [lemmatizer.lemmatize(word) for word in tokens]
 
-    # Convert tokens to USE embeddings
-    embeddings = embed([" ".join(tokens)])
+    # Join tokens
+    processed_text = ' '.join(tokens)
 
-    # Flatten and convert to numpy array
-    embeddings_array = np.array(embeddings[0])
+    # Create TF-IDF vectorizer
+    vectorizer = TfidfVectorizer(max_features=3457)
+    
+    # Fit and transform the text
+    tfidf_vector = vectorizer.fit_transform([processed_text])
 
-    # Join tokens and return embeddings array
-    return ' '.join(tokens), embeddings_array
+    # # Convert TF-IDF vector to numpy array
+    # tfidf_array = tfidf_vector.toarray()
+
+    return processed_text, tfidf_vector
