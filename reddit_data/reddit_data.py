@@ -4,9 +4,9 @@ from imports import *
 reddit_data = Blueprint('reddit_data', __name__)
 
 # Initialize the Reddit API instance
-reddit = praw.Reddit(client_id='YOUR_CLIENT_ID',
-                     client_secret='YOUR_CLIENT_SECRET',
-                     user_agent='YOUR_USER_AGENT')
+reddit = praw.Reddit(client_id='DP78tG9HeZiMQg',
+                     client_secret='xF80XIHboP51Lq63viNLTzxJrmE',
+                     user_agent='RedditWebScraping')
 
 @reddit_data.route('/reddit_data')
 def get_reddit_data():
