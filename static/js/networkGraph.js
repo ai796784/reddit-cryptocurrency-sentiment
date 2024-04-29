@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+function updateNetworkGraph() {
     // Sample data (replace with your own data fetching and processing)
     var nodes = new vis.DataSet([
         { id: 1, label: 'Node 1' },
@@ -21,4 +21,4 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     var options = {};
     var network = new vis.Network(container, data, options);
-});
+}
