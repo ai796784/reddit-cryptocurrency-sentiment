@@ -12,5 +12,6 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
     updateBarChart();
     updatePieChart();
     updateAreaChart();
+    updateNetworkGraph();
   }
   
