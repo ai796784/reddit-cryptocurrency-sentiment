@@ -14,6 +14,5 @@ def reddit_search(subreddit_name):
     posts = []
     for post in hot_posts:
         posts.append([post.title, post.score, post.id, post.subreddit, post.url, post.num_comments, post.selftext, post.created])
-    posts_df = pd.DataFrame(posts, columns=['Title', 'Score', 'ID', 'Subreddit', 'URL', 'Num Comments', 'Body', 'Created'])
-
-    return posts_df
+    
+    return posts
