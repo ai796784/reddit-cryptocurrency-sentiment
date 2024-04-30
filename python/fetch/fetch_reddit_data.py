@@ -1,5 +1,3 @@
-import imports
-
 def reddit_search(subreddit_name):
     # Connect to Reddit
     reddit = praw.Reddit(client_id='DP78tG9HeZiMQg', client_secret='xF80XIHboP51Lq63viNLTzxJrmE', user_agent='RedditWebScraping')
@@ -13,6 +11,16 @@ def reddit_search(subreddit_name):
     # Store post data
     posts = []
     for post in hot_posts:
-        posts.append([post.title, post.score, post.id, post.subreddit, post.url, post.num_comments, post.selftext, post.created])
+        post_dict = {
+            "title": post.title,
+            "score": post.score,
+            "id": post.id,
+            "subreddit": post.subreddit,
+            "url": post.url,
+            "num_comments": post.num_comments,
+            "selftext": post.selftext,
+            "created": post.created
+        }
+        posts.append(post_dict)
     
     return posts

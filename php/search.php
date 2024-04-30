@@ -7,20 +7,20 @@ $subreddit = $_POST['subreddit'];
 
 // Call the Python script with PRAW to fetch data from Reddit
 // Example:
-exec("python fetch_reddit_data.py $subreddit");
+$posts = shell_exec("python ../python/fetch/reddit_search.py '$subreddit_name'");
+$postArray = explode("\n", $posts);
+$interactions = shell_exec("python ../python/fetch/author_interaction '$posts'");
 
-// Connect to the database
-$conn = connectDB();
-
-// Insert fetched data into the database
-// Example:
-$sql = "INSERT INTO reddit_data (subreddit, data) VALUES ('$subreddit', '$fetched_data')";
-$result = mysqli_query($conn, $sql);
-
-// Close database connection
-mysqli_close($conn);
+foreach ($postArray as $post) {
+    // Accessing the "selftext" key of each post
+    $body = $post['selftext'];
+    $text_vector = shell_exec("python ../python/fetch/reddit_search.py '$body'");
+    $values = explode(" ", $text_vector);
+    $body_sentiment = $values[0];
+    $body_vector = $values[1];
+    $body_emotion = shell_exec("python ../python/fetch/reddit_search.py '$body'");
+}
 
 // Redirect back to the homepage or any other page after processing
 header("Location: index.html");
 exit();
-?>
