@@ -1,6 +1,6 @@
 import imports
 
-def preprocess_text_with_tfidf(text):
+def preprocess_text_sentiment(text):
     # Convert to lowercase
     text = text.lower()
 
