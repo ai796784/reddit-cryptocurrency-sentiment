@@ -20,32 +20,43 @@ if ($posts === FALSE) {
     echo "Failed to fetch data from Flask route";
 } else {
 
-    echo $posts;
-    // // Output the fetched data
-    // $posts = json_decode($response, true);
-
-    // // Preprocess the text of each post
-    // foreach ($posts['posts'] as &$post) {
-    //     // Extract text data from the post (modify this based on your actual data structure)
-    //     $text = $post['body']; // Assuming the title of the post is the text to be preprocessed
-
-    //     // Preprocess the text using the preprocess routes
-    //     $sentiment_analysis_url = 'http://localhost:5000/sentiment_analysis';
-    //     $data = array('text' => $text);
-    //     $data_json = json_encode($data);
-
-    //     // Initialize cURL session
-    //     $ch = curl_init();
-
-    //     // Set cURL options
-    //     curl_setopt($ch, CURLOPT_URL, $preprocess_url);
-    //     curl_setopt($ch, CURLOPT_POST, 1);
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    //     $sentiment_score_response = curl_exec($ch);
+    $posts = json_decode($posts, true);
+    
+    $conn = connectDB();
 
 
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Iterate over each post and insert into the database
+    foreach ($posts_data['posts'] as $post) {
+        // Prepare the SQL statement with placeholders
+        $sql = "INSERT INTO posts (title, score, num_comments, interaction, url, author, post_id, body, creation_time, upvotes, downvotes, media_type)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        // Prepare the statement
+        $stmt = mysqli_prepare($conn, $sql);
+
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, 'siiisssssid', $post['title'], $post['score'], $post['num_comments'], $post['interaction'], $post['url'], $post['author'], $post['post_id'], $post['body'], $post['creation_time'], $post['upvotes'], $post['downvotes'], $post['media_type']);
+
+        // Execute the statement
+        $result = mysqli_stmt_execute($stmt);
+
+        // Check for errors
+        if (!$result) {
+            echo "Error: " . mysqli_error($conn);
+        } else {
+            echo "Data inserted successfully.";
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    }
+
+    // Close the database connection
+    mysqli_close($conn);
     }
 
 
