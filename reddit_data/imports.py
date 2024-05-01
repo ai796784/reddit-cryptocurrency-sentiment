@@ -1,7 +1,7 @@
 from flask import Flask
-from reddit_data import reddit_data
-from preprocess import preprocess_text_sentiment, preprocess\
 from flask import Blueprint, jsonify, request
+from reddit_data import reddit_data
+# from preprocess import preprocess_text_sentiment, preprocess\
 import praw
 import re
 from nltk.tokenize import word_tokenize

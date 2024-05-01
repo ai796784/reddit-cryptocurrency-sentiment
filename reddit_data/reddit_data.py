@@ -1,4 +1,13 @@
-from imports import *
+from flask import Flask
+from flask import Blueprint, jsonify, request
+import praw
+import re
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 reddit_data = Blueprint('reddit_data', __name__)
 
@@ -23,7 +32,7 @@ def classify_media_type(post):
 @reddit_data.route('/reddit_data', methods=['GET'])
 def get_reddit_data():
     subreddit_name = request.args.get('subreddit')
-    limit_posts = int(request.args.get('limit', 10000))
+    limit_posts = int(request.args.get('limit', 100))
 
     # Get subreddit data
     subreddit = reddit.subreddit(subreddit_name)
@@ -41,7 +50,7 @@ def get_reddit_data():
             'num_comments': post.num_comments,
             'interaction': interaction,
             'url': post.url,
-            'author': post.author.name if post.author else None
+            'author': post.author.name if post.author else None,
             'post_id': post.id,
             'body': post.selftext,  # Assuming you want the text body of the post
             'creation_time': post.created_utc,  # Assuming you want the creation time in UTC

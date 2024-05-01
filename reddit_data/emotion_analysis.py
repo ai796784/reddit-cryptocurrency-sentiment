@@ -1,5 +1,4 @@
-from imports import *
-
+from joblib import load
 
 emotion_analysis = Blueprint('emotion_analysis', __name__)
 
