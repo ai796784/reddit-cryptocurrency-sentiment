@@ -1,18 +1,37 @@
-function updateLineChart() {
-    // Replace with your data and chart logic
-    var ctx = document.getElementById('lineChartCanvas').getContext('2d');
-    var lineChart = new Chart(ctx, {
+function createLineChart(data) {
+  var labels = data.map(function(item) {
+      return item.title;
+  });
+
+  var numComments = data.map(function(item) {
+      return item.num_comments;
+  });
+
+  var interaction = data.map(function(item) {
+      return item.interaction;
+  });
+
+  var ctx = document.getElementById('lineChartCanvas').getContext('2d');
+  var myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-          label: 'Line Chart',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: 'rgb(75, 192, 192)',
-          fill: false
-        }]
+          labels: labels,
+          datasets: [{
+              label: 'Number of Comments',
+              data: numComments,
+              borderColor: 'blue',
+              borderWidth: 1
+          },
+          {
+              label: 'Interaction Value',
+              data: interaction,
+              borderColor: 'green',
+              borderWidth: 1
+          }]
       },
-      options: {}
-    });
-  }
-  
+      options: {
+          responsive: true,
+          maintainAspectRatio: false
+      }
+  });
+}

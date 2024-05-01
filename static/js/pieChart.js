@@ -1,33 +1,26 @@
-function updatePieChart() {
-    // Replace with your data and chart logic
-    var ctx = document.getElementById('pieChartCanvas').getContext('2d');
-    var pieChart = new Chart(ctx, {
+function createPieChart() {
+  // Create an empty dataset with no data
+  var emptyData = [];
+
+  var ctx = document.getElementById('pieChartCanvas').getContext('2d');
+  var pieChart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: 'Pie Chart',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
+          labels: [''], // One empty label to keep the legend visible
+          datasets: [{
+              label: 'Pie Chart',
+              data: emptyData, // Empty data array
+              backgroundColor: ['rgba(0, 0, 0, 0)'], // Transparent color to hide the pie
+              borderColor: ['rgba(0, 0, 0, 0)'], // Transparent color to hide the borders
+              borderWidth: 0 // No border
+          }]
       },
-      options: {}
-    });
-  }
-  
+      options: {
+          plugins: {
+              legend: {
+                  display: true // Show legend
+              }
+          }
+      }
+  });
+}
