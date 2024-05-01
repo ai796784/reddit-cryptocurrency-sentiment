@@ -1,4 +1,12 @@
-from imports import *
+from joblib import load
+import re
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+
 
 sentiment_analysis = Blueprint('sentiment_analysis', __name__)
 
