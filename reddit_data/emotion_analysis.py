@@ -1,15 +1,16 @@
-from flask import Flask, request, jsonify
+from flask import Flask
+from flask import Blueprint, request, jsonify
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import numpy as np
 from scipy.special import softmax
 import csv
 import urllib.request
 
-emotion_analysis_analysis = Blueprint('emotion_analysis', __name__)
+emotion_analysis = Blueprint('emotion_analysis', __name__)
 
 
-@app.route('/emotion_analysis', methods=['POST'])
-def emotion_analysis():
+@emotion_analysis.route('/emotion_analysis', methods=['POST'])
+def emotion_analysis_endpoint():
     # Get text data from the request
     data = request.get_json()
     text = data.get('text')
@@ -47,14 +48,14 @@ def emotion_analysis():
     # ranking = ranking[::-1]
 
 
-    fixed_label_order = ["joy", "sadness", "anger", "fear"]
+    fixed_label_order = ["joy", "sadness", "anger", "optimism"]
 
     # Prepare response
     for label in fixed_label_order:
-    index = labels.index(label) if label in labels else None
-    if index is not None:
-        score = np.round(float(scores[index]), 4)
-        response_data.append({"label": label, "score": score})
+        index = labels.index(label) if label in labels else None
+        if index is not None:
+            score = np.round(float(scores[index]), 4)
+            response_data.append({"label": label, "score": score})
         
     # response_data = []
     # for i in range(scores.shape[0]):

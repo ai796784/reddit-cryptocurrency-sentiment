@@ -1,28 +1,45 @@
 <?php
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 //imports
-require_once 'endpoint/reddit_data.php';
-require_once 'endpoint/sentiment_analysis.php';
-require_once 'endpoint/emotion_analysis.php';
+require_once 'endpoints/reddit_data.php';
+require_once 'endpoints/sentiment_analysis.php';
+require_once 'endpoints/emotion_analysis.php';
 require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
-
-
+$limit = 5;
 $subreddit = $_POST['subredditName'];
-$fetch_url = 'http://localhost:5000/reddit_data?subreddit=' . urlencode($subreddit) . '&limit=100';
+$fetch_url = 'http://localhost:5000/reddit_data?subreddit=' . urlencode($subreddit) . '&limit=' . $limit;
 $sentiment_url = 'http://localhost:8000/sentiment_analysis';
 $emotion_url = 'http://localhost:8000/emotion_analysis';
 
-
 $threshold = 0.3;
 
+$positiveCount = 0;
+$negativeCount = 0;
+$neutralCount = 0;
+$textCount = 0;
+$imageCount = 0;
+$videoCount = 0;
+$linkCount = 0;
+
+$joy_mean = 0;
+$sadness_mean = 0;
+$anger_mean = 0;
+$optimism_mean = 0;
 
 $posts = fetchfromreddit($fetch_url);
 
+$linePlotData = array();
+$heatPlotData = array();
+$barPlotData = array();
+$piePlotData = array();
+$radarPlotData = array();
 
 $conn = connectDB();
-
 
 $subreddit_query = "SELECT id FROM subreddits WHERE name = ?";
 $subreddit_stmt = mysqli_prepare($conn, $subreddit_query);
@@ -32,133 +49,113 @@ mysqli_stmt_bind_result($subreddit_stmt, $subreddit_id);
 mysqli_stmt_fetch($subreddit_stmt);
 mysqli_stmt_close($subreddit_stmt);
 
+foreach ($posts['posts'] as $post) {
+    insertPost($conn, $subreddit_id, $post);
 
-foreach ($posts['posts'] as $post){
-    
-    insertPost($conn,$subreddit_id,$post);
-    
-    $sentiment_response_data = sentiment_analysis($sentiment_url,$post['body']);
-    $emotion_response_data = emotion_analysis($emotion_url,$post['body']);
+    $linePlotData[] = array(
+        'title' => $post['title'],
+        'num_comments' => $post['num_comments'],
+        'interaction' => $post['interaction']
+    );
 
-    insertSentiment($conn,$post['post_id'],$sentiment_response_data,$emotion_response_data,$threshold);
+    switch ($post['media_type']) {
+        case 'Text':
+            $textCount++;
+            break;
+        case 'Image':
+            $imageCount++;
+            break;
+        case 'Video':
+            $videoCount++;
+            break;
+        case 'Link':
+            $linkCount++;
+            break;
+        default:
+            // Handle unknown media types if any
+            break;
+    }
 
+    $heatPlotData[] = array(
+        'creation_time' => $post['creation_time'],
+        'interaction' => $post['interaction'],
+        'score' => $post['score'],
+        'num_comments' => $post['num_comments']
+    );
 
+    $barPlotData[] = array(
+        'title' => $post['title'],
+        'num_comments' => $post['num_comments'],
+        'interaction' => $post['interaction']
+    );
 
+    $sentiment_response_data = sentiment_analysis($sentiment_url, $post['body']);
+    $emotion_response_data = emotion_analysis($emotion_url, $post['body']);
+    $sentiment_emotion = insertSentiment($conn, $post['post_id'], $sentiment_response_data, $emotion_response_data, $threshold);
 
+    $sentiment_label = $sentiment_emotion['sentiment_label'];
 
-// // Initialize cURL session
-// $ch = curl_init();
+    switch ($sentiment_label) {
+        case 'Positive':
+            $positiveCount++;
+            break;
+        case 'Negative':
+            $negativeCount++;
+            break;
+        case 'Neutral':
+            $neutralCount++;
+            break;
+    }
 
-// // Set cURL options
-// curl_setopt($ch, CURLOPT_URL, $fetch_url);
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
-
-// // Execute cURL request
-// $posts = curl_exec($ch);
-
-// // Check if the request was successful
-// if ($posts === FALSE) {
-//     // Handle error
-//     echo "Failed to fetch data from Flask route";
-// } else {
-//     $posts = json_decode($posts, true);
-
-//     // Establish database connection
-//     $conn = connectDB();
-//     if (!$conn) {
-//         die("Connection failed: " . mysqli_connect_error());
-//     }
-
-//     // Query the subreddit_id based on the subreddit name
-//     $subreddit_query = "SELECT id FROM subreddits WHERE name = ?";
-//     $subreddit_stmt = mysqli_prepare($conn, $subreddit_query);
-//     mysqli_stmt_bind_param($subreddit_stmt, 's', $subreddit);
-//     mysqli_stmt_execute($subreddit_stmt);
-//     mysqli_stmt_bind_result($subreddit_stmt, $subreddit_id);
-//     mysqli_stmt_fetch($subreddit_stmt);
-//     mysqli_stmt_close($subreddit_stmt);
-
-//     // Iterate over each post and insert into the database
-//     foreach ($posts['posts'] as $post) {
-        
-//         echo $post;
-
-//         // Prepare the SQL statement with placeholders
-//         $sql = "INSERT INTO posts (subreddit_id, title, score, num_comments, interaction, url, author, post_id, body, creation_time, upvotes, downvotes, media_type)
-//                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-//         // Prepare the statement
-//         $stmt = mysqli_prepare($conn, $sql);
-
-//         // Bind parameters
-//         mysqli_stmt_bind_param($stmt, 'isiiisssssid', $subreddit_id, $post['title'], $post['score'], $post['num_comments'], $post['interaction'], $post['url'], $post['author'], $post['post_id'], $post['body'], $post['creation_time'], $post['upvotes'], $post['downvotes'], $post['media_type']);
-
-//         // Execute the statement
-//         $result = mysqli_stmt_execute($stmt);
-
-//         // Check for errors
-//         if (!$result) {
-//             echo "Error: " . mysqli_error($conn);
-//         } else {
-//             echo "Data inserted successfully.";
-//         }
-
-//         // Close the statement
-//         mysqli_stmt_close($stmt);
-
-
-//         $sentiment_data = array('text' => $post['body']);
-//         $sentiment_ch = curl_init();
-//         curl_setopt($sentiment_ch, CURLOPT_URL, $sentiment_url);
-//         curl_setopt($sentiment_ch, CURLOPT_RETURNTRANSFER, true);
-//         curl_setopt($sentiment_ch, CURLOPT_POST, true);
-//         curl_setopt($sentiment_ch, CURLOPT_POSTFIELDS, json_encode($sentiment_data));
-//         curl_setopt($sentiment_ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-//         $sentiment_response = curl_exec($sentiment_ch);
-//         if ($sentiment_response !== FALSE) {
-//             $sentiment_response_data = json_decode($sentiment_response, true);
-//             $sentiment_score = $sentiment_response_data['sentiment_score'];
-//             echo "Sentiment score for post with ID " . $post['post_id'] . ": " . $sentiment_score;
-//         } else {
-//             echo "Failed to call sentiment analysis endpoint";
-//         }
-//         curl_close($sentiment_ch);
-
-
-//         $emotion_data = array('text' => $post['body']);
-//         $emotion_ch = curl_init();
-//         curl_setopt($emotion_ch, CURLOPT_URL, $emotion_url);
-//         curl_setopt($emotion_ch, CURLOPT_RETURNTRANSFER, true);
-//         curl_setopt($emotion_ch, CURLOPT_POST, true);
-//         curl_setopt($emotion_ch, CURLOPT_POSTFIELDS, json_encode($emotion_data));
-//         curl_setopt($emotion_ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-//         $emotion_response = curl_exec($emotion_ch);
-//         if ($emotion_response !== FALSE) {
-//             $emotion_response_data = json_decode($emotion_response, true);
-//             if (isset($emotion_response_data)) {
-//                 foreach ($emotion_response_data as $emotion) {
-//                     $label = $emotion['label'];
-//                     $score = $emotion['score'];
-//                     echo "Emotion: $label, Score: $score\n";
-//                 }
-//             } else {
-//                 echo "Failed to decode emotion analysis response\n";
-//             }
-//         } else {
-//             echo "Failed to call emotion analysis endpoint";
-//         }
-//         curl_close($emotion_ch);
-
-
-
-
-    
-    // Close the database connection
+    $emotion_scores = $sentiment_emotion['emotion_scores'];
+    $joy_mean += $emotion_scores['joy'];
+    $sadness_mean += $emotion_scores['sadness'];
+    $anger_mean += $emotion_scores['anger'];
+    $optimism_mean += $emotion_scores['optimism'];
 }
 
 mysqli_close($conn);
 
-// Redirect back to the homepage or any other page after processing
-header("Location: ../template/test.html");
+$piePlotData[] = array(
+    'Positive' => $positiveCount / $limit,
+    'Negative' => $negativeCount / $limit,
+    'Neutral' => $neutralCount / $limit,
+    'Text' => $textCount,
+    'Image' => $imageCount,
+    'Video' => $videoCount,
+    'Link' => $linkCount
+);
+
+$radarPlotData[] = array(
+    'joy' => $joy_mean / $limit,
+    'sadness' => $sadness_mean / $limit,
+    'anger' => $anger_mean / $limit,
+    'optimism' => $optimism_mean / $limit
+);
+
+$data = array(
+    'linePlotData' => $linePlotData,
+    'barPlotData' => $barPlotData,
+    'piePlotData' => $piePlotData,
+    'heatPlotData' => $heatPlotData,
+    'radarPlotData' => $radarPlotData
+);
+
+
+// $json_data = json_encode($data);
+
+// // Check if conversion was successful
+// if ($json_data === false) {
+//     // Handle error if conversion failed
+//     echo "Error: Unable to encode data to JSON";
+// } else {
+//     // Set the appropriate header for JSON response
+//     header('Content-Type: application/json');
+//     // Echo the JSON data
+//     echo $json_data;
+// }
+
+// Send the data as a JSON response
+header('Content-Type: application/json');
+echo json_encode($data);
 exit();
-?>

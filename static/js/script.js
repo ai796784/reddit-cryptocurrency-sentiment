@@ -5,7 +5,7 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
   
     // Make AJAX request to fetch data from PHP script
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "search.php", true);
+    xhr.open("POST", "../../php/search.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onerror = function() {
       console.error("An error occurred while making the AJAX request.");
@@ -15,14 +15,21 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           // Parse the JSON response
+          console.log(xhr.responseText)
+          
           var responseData = JSON.parse(xhr.responseText);
   
           // Call functions to create charts with the received data
-          createLineChart(responseData);
-          createBarChart(responseData);
-          //createPieChart(responseData);
-          //createAreaChart(responseData);
-          //createNetworkGraph(responseData);
+          // createLineChart(responseData);
+          // createBarChart(responseData);
+          // createPieChart(responseData);
+          // createAreaChart(responseData);
+          // createNetworkGraph(responseData);
+          createLineChart(responseData.linePlotData);
+          createBarChart(responseData.barPlotData);
+          createPieChart(responseData.piePlotData);
+          createHeatMap(responseData.heatPlotData);
+          createRadarChart(responseData.radarPlotData);
         } else {
           console.error("AJAX request failed");
         }

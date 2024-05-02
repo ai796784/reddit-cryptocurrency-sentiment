@@ -1,12 +1,13 @@
 <?php
 // Database connection parameters
 $servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database_name";
+$username = "root";
+$password = "kTO]nQm-]Y(!QNbo";
+$dbname = "reddit_data_sentiment";
 
 // Function to connect to the database
-function connectDB() {
+function connectDB()
+{
     global $servername, $username, $password, $dbname;
 
     // Create connection
@@ -19,4 +20,3 @@ function connectDB() {
 
     return $conn;
 }
-?>

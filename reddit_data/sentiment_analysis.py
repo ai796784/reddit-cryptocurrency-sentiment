@@ -1,3 +1,5 @@
+from flask import Flask
+from flask import Blueprint, jsonify, request
 from joblib import load
 import re
 import nltk
@@ -7,10 +9,9 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
-
 sentiment_analysis = Blueprint('sentiment_analysis', __name__)
 
-@sentiment.route('/sentiment_analysis', methods=['POST'])
+@sentiment_analysis.route('/sentiment_analysis', methods=['POST'])
 def sentiment_regression_endpoint():
     # Get the text data from the request
     data = request.get_json()
