@@ -121,6 +121,10 @@ $piePlotData[] = array(
     'Positive' => $positiveCount / $limit,
     'Negative' => $negativeCount / $limit,
     'Neutral' => $neutralCount / $limit,
+
+);
+
+$donutPlotData[] = array(
     'Text' => $textCount,
     'Image' => $imageCount,
     'Video' => $videoCount,
@@ -153,6 +157,7 @@ $data = array(
     'linePlotData' => $linePlotData,
     //'barPlotData' => $barPlotData,
     'piePlotData' => $piePlotData,
+    'donutPlotData' => $donutPlotData,
     //'heatPlotData' => $heatPlotData,
     'radarPlotData' => $radarPlotData
     //'networkPlotData' => $networkPlotData
