@@ -1,7 +1,26 @@
 document.getElementById("redditForm").addEventListener("submit", function (event) {
   event.preventDefault();
   const subreddit = document.getElementById("subreddit").value;
+  
+  // // Make AJAX request to fetch data from PHP script
+  // var xhr = new XMLHttpRequest();
+  // xhr.open("POST", "../../php/search.php", true);
+  // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  // xhr.onerror = function() {
+  //   console.error("An error occurred while making the AJAX request.");
+  // };
+
+  // xhr.onreadystatechange = function() {
+  //   if (xhr.readyState === XMLHttpRequest.DONE) {
+  //     if (xhr.status === 200) {
+  //       // Parse the JSON response
+  //       console.log(xhr.responseText)
+        
+  //       var responseData = JSON.parse(xhr.responseText);
+
   fetchDataAndUpdateCharts(subreddit);
+  //fetchDataAndUpdateChart(responseData);
+
 });
 
 
@@ -20,6 +39,14 @@ function fetchDataAndUpdateCharts(subreddit) {
   updateBarChart(barData);
   updateDonutChart(donutData);
   updateNetworkGraph();
+
+
+
+  // updatePieChart(responseText.piePlotData);
+  // updateLineChart(responseText.linePlotData);
+  // updateBarChart(responseText.barPlotData);
+  // updateDonutChart(responseText.donutPlotData);
+  // updateNetworkGraph(responseText.networkPlotData);
 }
 
 
