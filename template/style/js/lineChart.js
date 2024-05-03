@@ -1,4 +1,11 @@
 function updateLineChart() {
+    // Check if a chart already exists
+    var existingChart = Chart.getChart('lineChartCanvas');
+
+    // If a chart exists, destroy it
+    if (existingChart) {
+      existingChart.destroy();
+    }
     // Replace with your data and chart logic
     var ctx = document.getElementById('lineChartCanvas').getContext('2d');
     var lineChart = new Chart(ctx, {
@@ -18,3 +25,10 @@ function updateLineChart() {
     });
   }
   
+function clearLineChart() {
+    // var ctx = document.getElementById('lineChartCanvas').getContext('2d');
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const canvas = document.getElementById('lineChartCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+}
