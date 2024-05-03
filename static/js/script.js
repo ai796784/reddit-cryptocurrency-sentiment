@@ -20,15 +20,11 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           var responseData = JSON.parse(xhr.responseText);
   
           // Call functions to create charts with the received data
-          // createLineChart(responseData);
-          // createBarChart(responseData);
-          // createPieChart(responseData);
-          // createAreaChart(responseData);
-          // createNetworkGraph(responseData);
-          //createLineChart(responseData.linePlotData);
+          // createLineChart(responseData.linePlotData);
           //createBarChart(responseData.barPlotData);
-          createPieChart(responseData.piePlotData);
+          // createPieChart(responseData.piePlotData);
           //createHeatMap(responseData.heatPlotData);
+          // createDonutChart(responseData.piePloData);
           createRadarChart(responseData.radarPlotData);
           //createNetworkGraph(responseData.networkPlotData);
         } else {

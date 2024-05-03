@@ -45,22 +45,4 @@ function createPieChart(data) {
         }
     });
 
-    // Media Type Pie Chart
-    var mediaTypeData = {
-        labels: ['Text', 'Image', 'Video', 'Link'],
-        datasets: [{
-            data: [data.Text, data.Image, data.Video, data.Link],
-            backgroundColor: ['blue', 'green', 'red', 'orange']
-        }]
-    };
-
-    var mediaTypeCtx = document.getElementById('mediaTypePieChartCanvas').getContext('2d');
-    var mediaTypePieChart = new Chart(mediaTypeCtx, {
-        type: 'pie',
-        data: mediaTypeData,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
 }

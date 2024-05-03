@@ -10,7 +10,7 @@ require_once 'endpoints/emotion_analysis.php';
 require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
-$limit = 20;
+$limit = 10;
 $subreddit = $_POST['subredditName'];
 $fetch_url = 'http://localhost:5000/reddit_data?subreddit=' . urlencode($subreddit) . '&limit=' . $limit;
 $sentiment_url = 'http://localhost:5000/sentiment_analysis';
@@ -53,7 +53,6 @@ foreach ($posts['posts'] as $post) {
     $creation_time = insertPost($conn, $subreddit_id, $post);
 
     $linePlotData[] = array(
-        'title' => $post['title'],
         'num_comments' => $post['num_comments'],
         'interaction' => $post['interaction']
     );
@@ -151,7 +150,7 @@ $networkPlotData = array();
 // }
 
 $data = array(
-    //'linePlotData' => $linePlotData,
+    'linePlotData' => $linePlotData,
     //'barPlotData' => $barPlotData,
     'piePlotData' => $piePlotData,
     //'heatPlotData' => $heatPlotData,
@@ -177,5 +176,18 @@ $data = array(
 
 header('Content-Type: application/json');
 echo json_encode($data);
+
+$positiveCount = 0;
+$negativeCount = 0;
+$neutralCount = 0;
+$textCount = 0;
+$imageCount = 0;
+$videoCount = 0;
+$linkCount = 0;
+
+$joy_mean = 0;
+$sadness_mean = 0;
+$anger_mean = 0;
+$optimism_mean = 0;
 
 exit();
