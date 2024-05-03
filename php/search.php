@@ -31,7 +31,8 @@ $sadness_mean = 0;
 $anger_mean = 0;
 $optimism_mean = 0;
 
-$posts = fetchfromreddit($fetch_url);
+$posts_interaction = fetchfromreddit($fetch_url);
+$posts = $posts_interaction['posts'];
 
 $linePlotData = array();
 $heatPlotData = array();
@@ -140,6 +141,47 @@ $radarPlotData[] = array(
 
 $networkPlotData = array();
 
+
+// Define nodes and edges arrays
+$nodes = array();
+$edges = array();
+
+// Iterate over author interactions
+foreach ($author_interactions as $author => $interactions) {
+    // Add author as a node
+    $nodes[] = array(
+        'id' => $author,
+        'label' => $author,
+        // You can add additional properties to nodes if needed
+    );
+
+    // Iterate over interactions
+    foreach ($interactions as $interaction) {
+        // Add interaction as a node if it doesn't already exist
+        if (!in_array($interaction, array_column($nodes, 'id'))) {
+            $nodes[] = array(
+                'id' => $interaction,
+                'label' => $interaction,
+                // You can add additional properties to nodes if needed
+            );
+        }
+
+        // Add edge between author and interaction
+        $edges[] = array(
+            'from' => $author,
+            'to' => $interaction,
+            // You can add additional properties to edges if needed
+        );
+    }
+}
+
+// Combine nodes and edges into a single array
+$networkPlotData = array(
+    'nodes' => $nodes,
+    'edges' => $edges,
+);
+
+
 // $author_interactions = $posts['author_interaction'];
 
 // foreach ($author_interactions as $author => $interacted_users) {
@@ -158,9 +200,9 @@ $data = array(
     //'barPlotData' => $barPlotData,
     'piePlotData' => $piePlotData,
     'donutPlotData' => $donutPlotData,
-    //'heatPlotData' => $heatPlotData,
-    'radarPlotData' => $radarPlotData
-    //'networkPlotData' => $networkPlotData
+    'heatPlotData' => $heatPlotData,
+    'radarPlotData' => $radarPlotData,
+    'networkPlotData' => $networkPlotData
 );
 
 
