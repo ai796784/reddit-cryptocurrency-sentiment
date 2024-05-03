@@ -40,9 +40,11 @@ def get_reddit_data():
 
     # Extract relevant post data
     posts_data = []
+
+    # author_interactions = {}
+
     for post in hot_posts:
-        
-        interaction = post.score / max(1, post.num_comments)
+        interaction = float(post.score) / max(1, post.num_comments)
         media_type = classify_media_type(post)
         posts_data.append({
             'title': post.title,
@@ -58,5 +60,17 @@ def get_reddit_data():
             'downvotes': post.downs,
             'media_type': media_type
         })
+        
+        
+        # if post.author:
+        #     if post.author.name not in author_interactions:
+        #         author_interactions[post.author.name] = set()
+        #         submission = reddit.submission(id=post.id)
+        #         submission.comments.replace_more(limit=None)
+        #         for comment in submission.comments.list():
+        #             if hasattr(comment, 'author') and comment.author:
+        #                 author_interactions[post.author.name].add(comment.author.name)
 
-    return jsonify({'posts': posts_data})
+    return jsonify({'posts': posts_data })
+    # , 'author_interactions': author_interactions
+    

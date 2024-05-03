@@ -25,11 +25,12 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           // createPieChart(responseData);
           // createAreaChart(responseData);
           // createNetworkGraph(responseData);
-          createLineChart(responseData.linePlotData);
-          createBarChart(responseData.barPlotData);
+          //createLineChart(responseData.linePlotData);
+          //createBarChart(responseData.barPlotData);
           createPieChart(responseData.piePlotData);
-          createHeatMap(responseData.heatPlotData);
+          //createHeatMap(responseData.heatPlotData);
           createRadarChart(responseData.radarPlotData);
+          //createNetworkGraph(responseData.networkPlotData);
         } else {
           console.error("AJAX request failed");
         }

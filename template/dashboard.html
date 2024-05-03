@@ -1,120 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <link rel="stylesheet" type="text/css" href="../static/css/styles.css" />
     <style>
-        .chart {
-            margin-bottom: 20px;
-        }
+      .chart {
+        margin-bottom: 20px;
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <h1 class="text-center mt-4 mb-5">Reddit Dashboard</h1>
-    <form id="redditForm" class="text-center mb-4">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-4 mb-5">Reddit Dashboard</h1>
+      <form id="redditForm" class="text-center mb-4">
         <div class="form-group">
-            <label for="subreddit">Choose a Subreddit:</label>
-            <select id="subreddit" name="subreddit" class="form-control">
-                <option value="" disabled selected>Select Subreddit</option>
-                <option value="CryptoCurrency">r/CryptoCurrency</option>
-                <option value="Bitcoin">r/Bitcoin</option>
-                <option value="Ethereum">r/Ethereum</option>
-                <option value="Ripple">r/Ripple</option>
-                <option value="Litecoin">r/Litecoin</option>
-                <option value="Altcoin">r/Altcoin</option>
-                <option value="CryptoMarkets">r/CryptoMarkets</option>
-                <option value="CryptoCurrencyTrading">r/CryptoCurrencyTrading</option>
-                <option value="CryptoCurrencyNews">r/CryptoCurrencyNews</option>
-                <option value="CryptoTechnology">r/CryptoTechnology</option>
-                <option value="ICO">r/ICO</option>
-                <option value="DeFi">r/DeFi</option>
-                <option value="BTC">r/BTC</option>
-                <option value="BitcoinBeginners">r/BitcoinBeginners</option>
-                <option value="Ethtrader">r/Ethtrader</option>
-                <option value="XRP">r/XRP</option>
-                <option value="Dogecoin">r/Dogecoin</option>
-                <option value="CryptoMoonShots">r/CryptoMoonShots</option>
-                <option value="NFT">r/NFT</option>
-                <option value="Binance">r/Binance</option>
-                <option value="Cardano">r/Cardano</option>
-                <option value="Solana">r/Solana</option>
-                <option value="DOT">r/DOT</option>
-            </select>
+          <label for="subreddit">Choose a Subreddit:</label>
+          <select id="subreddit" name="subreddit" class="form-control">
+            <option value="" disabled selected>Select Subreddit</option>
+            <option value="CryptoCurrency">r/CryptoCurrency</option>
+            <option value="Bitcoin">r/Bitcoin</option>
+            <option value="Ethereum">r/Ethereum</option>
+            <option value="Ripple">r/Ripple</option>
+            <option value="Litecoin">r/Litecoin</option>
+            <option value="Altcoin">r/Altcoin</option>
+            <option value="CryptoMarkets">r/CryptoMarkets</option>
+            <option value="CryptoCurrencyTrading">
+              r/CryptoCurrencyTrading
+            </option>
+            <option value="CryptoCurrencyNews">r/CryptoCurrencyNews</option>
+            <option value="CryptoTechnology">r/CryptoTechnology</option>
+            <option value="ICO">r/ICO</option>
+            <option value="DeFi">r/DeFi</option>
+            <option value="BTC">r/BTC</option>
+            <option value="BitcoinBeginners">r/BitcoinBeginners</option>
+            <option value="Ethtrader">r/Ethtrader</option>
+            <option value="XRP">r/XRP</option>
+            <option value="Dogecoin">r/Dogecoin</option>
+            <option value="CryptoMoonShots">r/CryptoMoonShots</option>
+            <option value="NFT">r/NFT</option>
+            <option value="Binance">r/Binance</option>
+            <option value="Cardano">r/Cardano</option>
+            <option value="Solana">r/Solana</option>
+            <option value="DOT">r/DOT</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
-    </form>
+      </form>
 
-    <div class="row">
+      <div class="row">
         <div class="col-md-6">
-            <div id="lineChart" class="chart card">
-                <h2 class="card-header">Line Chart</h2>
+          <div id="lineChart" class="chart card">
+            <h2 class="card-header">Line Chart</h2>
+            <div class="card-body">
+              <canvas id="lineChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="barChart" class="chart card">
+            <h2 class="card-header">Bar Chart</h2>
+            <div class="card-body">
+              <canvas id="barChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div id="sentimentPieChart" class="chart card">
+            <h2 class="card-header">Sentiment Pie Chart</h2>
+            <div class="card-body">
+              <canvas id="sentimentPieChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="mediaTypePieChart" class="chart card">
+            <h2 class="card-header">Media Type Pie Chart</h2>
+            <div class="card-body">
+              <canvas id="mediaTypePieChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div id="heatmap" class="chart card">
+            <h2 class="card-header">Heatmap</h2>
+            <div class="card-body">
+              <canvas id="heatmapCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="radarChart" class="chart card">
+            <h2 class="card-header">Radar Chart</h2>
+            <div class="card-body">
+              <canvas id="radarChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="row mt-4">
+        <div class="col-md-6">
+            <div id="networkGraph" class="chart card">
+                <h2 class="card-header">Network Graph</h2>
                 <div class="card-body">
-                    <canvas id="lineChartCanvas"></canvas>
+                    <svg id="networkGraphSvg" width="800" height="600"></svg>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div id="barChart" class="chart card">
-                <h2 class="card-header">Bar Chart</h2>
-                <div class="card-body">
-                    <canvas id="barChartCanvas"></canvas>
-                </div>
-            </div>
-        </div>
+    </div> -->
     </div>
 
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div id="sentimentPieChart" class="chart card">
-                <h2 class="card-header">Sentiment Pie Chart</h2>
-                <div class="card-body">
-                    <canvas id="sentimentPieChartCanvas"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div id="mediaTypePieChart" class="chart card">
-                <h2 class="card-header">Media Type Pie Chart</h2>
-                <div class="card-body">
-                    <canvas id="mediaTypePieChartCanvas"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div id="heatmap" class="chart card">
-                <h2 class="card-header">Heatmap</h2>
-                <div class="card-body">
-                    <canvas id="heatmapCanvas"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div id="radarChart" class="chart card">
-                <h2 class="card-header">Radar Chart</h2>
-                <div class="card-body">
-                    <canvas id="radarChartCanvas"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../static/js/script.js"></script>
-<script src="../static/js/lineChart.js"></script>
-<script src="../static/js/barChart.js"></script>
-<script src="../static/js/pieChart.js"></script>
-<script src="../static/js/heatmapChart.js"></script>
-<script src="../static/js/radarChart.js"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-heatmap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../static/js/script.js"></script>
+    <!-- <script src="../static/js/lineChart.js"></script>
+    <script src="../static/js/barChart.js"></script> -->
+    <script src="../static/js/pieChart.js"></script>
+    <!-- <script src="../static/js/heatmapChart.js"></script> -->
+    <script src="../static/js/radarChart.js"></script>
+    <!-- <script src="../static/js/networkGraph.js"></script> -->
+  </body>
 </html>

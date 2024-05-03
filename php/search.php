@@ -1,7 +1,7 @@
 <?php
 
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 //imports
 require_once 'endpoints/reddit_data.php';
@@ -10,11 +10,11 @@ require_once 'endpoints/emotion_analysis.php';
 require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
-$limit = 5;
+$limit = 20;
 $subreddit = $_POST['subredditName'];
 $fetch_url = 'http://localhost:5000/reddit_data?subreddit=' . urlencode($subreddit) . '&limit=' . $limit;
-$sentiment_url = 'http://localhost:8000/sentiment_analysis';
-$emotion_url = 'http://localhost:8000/emotion_analysis';
+$sentiment_url = 'http://localhost:5000/sentiment_analysis';
+$emotion_url = 'http://localhost:5000/emotion_analysis';
 
 $threshold = 0.3;
 
@@ -50,7 +50,7 @@ mysqli_stmt_fetch($subreddit_stmt);
 mysqli_stmt_close($subreddit_stmt);
 
 foreach ($posts['posts'] as $post) {
-    insertPost($conn, $subreddit_id, $post);
+    $creation_time = insertPost($conn, $subreddit_id, $post);
 
     $linePlotData[] = array(
         'title' => $post['title'],
@@ -77,7 +77,7 @@ foreach ($posts['posts'] as $post) {
     }
 
     $heatPlotData[] = array(
-        'creation_time' => $post['creation_time'],
+        'creation_time' => $creation_time,
         'interaction' => $post['interaction'],
         'score' => $post['score'],
         'num_comments' => $post['num_comments']
@@ -90,7 +90,9 @@ foreach ($posts['posts'] as $post) {
     );
 
     $sentiment_response_data = sentiment_analysis($sentiment_url, $post['body']);
+    
     $emotion_response_data = emotion_analysis($emotion_url, $post['body']);
+    
     $sentiment_emotion = insertSentiment($conn, $post['post_id'], $sentiment_response_data, $emotion_response_data, $threshold);
 
     $sentiment_label = $sentiment_emotion['sentiment_label'];
@@ -133,12 +135,28 @@ $radarPlotData[] = array(
     'optimism' => $optimism_mean / $limit
 );
 
+$networkPlotData = array();
+
+// $author_interactions = $posts['author_interaction'];
+
+// foreach ($author_interactions as $author => $interacted_users) {
+//     // For each interaction, create an edge from the author to the interacted user
+//     foreach ($interacted_users as $interacted_user) {
+//         // Add the edge to the array
+//         $networkPlotData[] = array(
+//             'source' => $author,
+//             'target' => $interacted_user
+//         );
+//     }
+// }
+
 $data = array(
-    'linePlotData' => $linePlotData,
-    'barPlotData' => $barPlotData,
+    //'linePlotData' => $linePlotData,
+    //'barPlotData' => $barPlotData,
     'piePlotData' => $piePlotData,
-    'heatPlotData' => $heatPlotData,
+    //'heatPlotData' => $heatPlotData,
     'radarPlotData' => $radarPlotData
+    //'networkPlotData' => $networkPlotData
 );
 
 
@@ -156,6 +174,8 @@ $data = array(
 // }
 
 // Send the data as a JSON response
+
 header('Content-Type: application/json');
 echo json_encode($data);
+
 exit();
