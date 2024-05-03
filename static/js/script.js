@@ -25,7 +25,7 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           // createPieChart(responseData.piePlotData);
           //createHeatMap(responseData.heatPlotData);
           // createDonutChart(responseData.piePloData);
-          createRadarChart(responseData.radarPlotData);
+          // createRadarChart(responseData.radarPlotData);
           //createNetworkGraph(responseData.networkPlotData);
         } else {
           console.error("AJAX request failed");
