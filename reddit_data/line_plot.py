@@ -1,13 +1,16 @@
 from flask import Flask, request, Blueprint, send_file
 import matplotlib.pyplot as plt
-
+import tempfile
 
 generate_line_plot = Blueprint('generate_line_plot', __name__)
+
+TEMP_DIR = "plots"
 
 @generate_line_plot.route('/generate_line_plot', methods=['POST'])
 def line_plot_endpoint():
     # Receive the line plot data from the PHP request
-    line_plot_data = request.json['linePlotData']
+    line_plot_data = request.json #['linePlotData']
+    # print (line_plot_data)
     
     # Extract x and y values from the received data
     x_values = []
@@ -25,9 +28,16 @@ def line_plot_endpoint():
     plt.grid(True)
     plt.tight_layout()
     
-    # Save the plot as an image file
-    plt.savefig('line_plot.png')
-    plt.close()
+
+    with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:
+        temp_file_path = temp_file.name
+        plt.savefig(temp_file_path)
     
     # Return the path to the generated line plot image file
-    return 'line_plot.png'
+    return temp_file_path
+    # # Save the plot as an image file
+    # plt.savefig('line_plot.png')
+    # plt.close()
+    
+    # # Return the path to the generated line plot image file
+    # return 'line_plot.png'

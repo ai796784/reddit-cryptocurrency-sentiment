@@ -1,14 +1,19 @@
 from flask import Flask, request, Blueprint, send_file
 import matplotlib.pyplot as plt
 import numpy as np
+import tempfile
 
 generate_radar_plot = Blueprint('generate_radar_plot', __name__)
+
+TEMP_DIR = "plots"
 
 @generate_radar_plot.route('/generate_radar_plot', methods=['POST'])
 def radar_plot_endpoint():
     # Receive the radar plot data from the PHP request
-    radar_plot_data = request.json['radarPlotData']
+    radar_plot_data = request.json #['radarPlotData']
     
+    radar_plot_data = radar_plot_data[0]
+
     # Extract labels and values from the received data
     labels = list(radar_plot_data.keys())
     values = list(radar_plot_data.values())
@@ -39,12 +44,16 @@ def radar_plot_endpoint():
     # Tight layout
     plt.tight_layout()
     
-    # Save the plot as an image file
-    plt.savefig('radar_plot.png')
-    plt.close()
-    
-    # Return the path to the generated radar plot image file
-    return 'radar_plot.png'
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:
+        temp_file_path = temp_file.name
+        plt.savefig(temp_file_path)
+    
+    # Return the path to the generated line plot image file
+    return temp_file_path
+    # # Save the plot as an image file
+    # plt.savefig('radar_plot.png')
+    # plt.close()
+    
+    # # Return the path to the generated radar plot image file
+    # return 'radar_plot.png'

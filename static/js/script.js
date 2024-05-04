@@ -29,15 +29,15 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           //createNetworkGraph(responseData.networkPlotData);
 
           // Define an object to map plot types to their paths
-          var newDirectory = "../../reddit_data/";
+          var newDirectory = "../../reddit_data/plots/";
 
           var plotPaths = {
-            "linePlot": responseData.linePlotResponse,
-            "piePlot": responseData.piePlotResponse,
-            "donutPlot": responseData.donutPlotResponse,
-            "heatPlot": responseData.heatPlotResponse,
-            "radarPlot": responseData.radarPlotResponse,
-            "networkPlot": responseData.networkPlotResponse
+            "line": responseData.linePlotResponse,
+            "pie": responseData.piePlotResponse,
+            "donut": responseData.donutPlotResponse,
+            "heat": responseData.heatPlotResponse,
+            "radar": responseData.radarPlotResponse,
+            "network": responseData.networkPlotResponse
           };
           
           for (var plotType in plotPaths) {

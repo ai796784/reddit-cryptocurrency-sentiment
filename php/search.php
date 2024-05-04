@@ -7,10 +7,12 @@ ini_set('display_errors', 1);
 require_once 'endpoints/reddit_data.php';
 require_once 'endpoints/sentiment_analysis.php';
 require_once 'endpoints/emotion_analysis.php';
+require_once 'endpoints/plots.php';
 require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
-$limit = 10;
+
+$limit = 20;
 
 $subreddit = $_POST['subredditName'];
 
@@ -45,6 +47,7 @@ $optimism_mean = 0;
 
 $posts_interaction = fetchfromreddit($fetch_url);
 $posts = $posts_interaction['posts'];
+$author_interactions = $posts_interaction['author_interactions'];
 
 $linePlotData = array();
 $heatPlotData = array();
@@ -54,7 +57,7 @@ $radarPlotData = array();
 
 $conn = connectDB();
 
-$subreddit_query = "SELECT id FROM subreddits WHERE name = ?";
+$subreddit_query = "SELECT subreddit_id FROM subreddits WHERE subreddit_name = ?";
 $subreddit_stmt = mysqli_prepare($conn, $subreddit_query);
 mysqli_stmt_bind_param($subreddit_stmt, 's', $subreddit);
 mysqli_stmt_execute($subreddit_stmt);
@@ -62,7 +65,7 @@ mysqli_stmt_bind_result($subreddit_stmt, $subreddit_id);
 mysqli_stmt_fetch($subreddit_stmt);
 mysqli_stmt_close($subreddit_stmt);
 
-foreach ($posts['posts'] as $post) {
+foreach ($posts as $post) {
     $creation_time = insertPost($conn, $subreddit_id, $post);
 
     $linePlotData[] = array(
@@ -101,9 +104,9 @@ foreach ($posts['posts'] as $post) {
     );
 
     $sentiment_response_data = sentiment_analysis($sentiment_url, $post['body']);
-    
+
     $emotion_response_data = emotion_analysis($emotion_url, $post['body']);
-    
+
     $sentiment_emotion = insertSentiment($conn, $post['post_id'], $sentiment_response_data, $emotion_response_data, $threshold);
 
     $sentiment_label = $sentiment_emotion['sentiment_label'];
@@ -153,9 +156,49 @@ $radarPlotData[] = array(
 $networkPlotData = array();
 
 
-// Define nodes and edges arrays
-$nodes = array();
-$edges = array();
+// // Define nodes and edges arrays
+// $nodes = array();
+// $edges = array();
+
+// Iterate over author interactions
+// foreach ($author_interactions as $author => $interactions) {
+//     // Add author as a node
+//     $nodes[] = array(
+//         'id' => $author,
+//         'label' => $author,
+//         // You can add additional properties to nodes if needed
+//     );
+
+//     // Iterate over interactions
+//     foreach ($interactions as $interaction) {
+//         // Add interaction as a node if it doesn't already exist
+//         if (!in_array($interaction, array_column($nodes, 'id'))) {
+//             $nodes[] = array(
+//                 'id' => $interaction,
+//                 'label' => $interaction,
+//                 // You can add additional properties to nodes if needed
+//             );
+//         }
+
+//         // Add edge between author and interaction
+//         $edges[] = array(
+//             'from' => $author,
+//             'to' => $interaction,
+//             // You can add additional properties to edges if needed
+//         );
+//     }
+// }
+
+// // Combine nodes and edges into a single array
+// $networkPlotData = array(
+//     'nodes' => $nodes,
+//     'edges' => $edges,
+// );
+
+
+// Initialize arrays to hold nodes and edges
+$nodes = [];
+$edges = [];
 
 // Iterate over author interactions
 foreach ($author_interactions as $author => $interactions) {
@@ -233,14 +276,6 @@ $networkPlotData = array(
 // Send the data as a JSON response
 
 
-// Example URLs to send data for each plot type
-$line_plot_url = 'http://example.com/line_plot_endpoint';
-$bar_plot_url = 'http://example.com/bar_plot_endpoint';
-$pie_plot_url = 'http://example.com/pie_plot_endpoint';
-$donut_plot_url = 'http://example.com/donut_plot_endpoint';
-$heat_plot_url = 'http://example.com/heat_plot_endpoint';
-$radar_plot_url = 'http://example.com/radar_plot_endpoint';
-$network_plot_url = 'http://example.com/network_plot_endpoint';
 
 // Generate each type of plot
 $linePlotResponse = generate_line_plot($line_plot_url, $linePlotData);
@@ -258,6 +293,8 @@ $response_data = array(
     'radarPlotResponse' => $radarPlotResponse,
     'networkPlotResponse' => $networkPlotResponse
 );
+
+
 
 header('Content-Type: application/json');
 echo json_encode($response_data);
