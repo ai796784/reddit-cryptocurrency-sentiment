@@ -27,6 +27,26 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           // createDonutChart(responseData.piePloData);
           // createRadarChart(responseData.radarPlotData);
           //createNetworkGraph(responseData.networkPlotData);
+
+          // Define an object to map plot types to their paths
+          var newDirectory = "../../reddit_data/";
+
+          var plotPaths = {
+            "linePlot": responseData.linePlotResponse,
+            "piePlot": responseData.piePlotResponse,
+            "donutPlot": responseData.donutPlotResponse,
+            "heatPlot": responseData.heatPlotResponse,
+            "radarPlot": responseData.radarPlotResponse,
+            "networkPlot": responseData.networkPlotResponse
+          };
+          
+          for (var plotType in plotPaths) {
+            if (plotPaths.hasOwnProperty(plotType)) {
+              var plotPath = plotPaths[plotType];
+              var newPath = newDirectory + plotPath
+              document.getElementById(plotType + "ChartCanvas").src = newPath;
+            }
+          }
         } else {
           console.error("AJAX request failed");
         }

@@ -11,10 +11,22 @@ require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
 $limit = 10;
+
 $subreddit = $_POST['subredditName'];
-$fetch_url = 'http://localhost:5000/reddit_data?subreddit=' . urlencode($subreddit) . '&limit=' . $limit;
-$sentiment_url = 'http://localhost:5000/sentiment_analysis';
-$emotion_url = 'http://localhost:5000/emotion_analysis';
+
+$base_url = 'http://localhost:5000/';
+
+$fetch_url = $base_url . 'reddit_data?subreddit=' . urlencode($subreddit) . '&limit=' . $limit;
+$sentiment_url = $base_url . 'sentiment_analysis';
+$emotion_url = $base_url . 'emotion_analysis';
+
+$line_plot_url = $base_url . 'generate_line_plot';
+$pie_plot_url = $base_url . 'generate_pie_plot';
+$donut_plot_url = $base_url . 'generate_donut_plot';
+$heat_plot_url = $base_url . 'generate_heat_plot';
+$radar_plot_url = $base_url . 'generate_radar_plot';
+$network_plot_url = $base_url . 'generate_network_plot';
+
 
 $threshold = 0.3;
 
@@ -77,7 +89,6 @@ foreach ($posts['posts'] as $post) {
     }
 
     $heatPlotData[] = array(
-        'creation_time' => $creation_time,
         'interaction' => $post['interaction'],
         'score' => $post['score'],
         'num_comments' => $post['num_comments']
@@ -195,15 +206,15 @@ $networkPlotData = array(
 //     }
 // }
 
-$data = array(
-    'linePlotData' => $linePlotData,
-    //'barPlotData' => $barPlotData,
-    'piePlotData' => $piePlotData,
-    'donutPlotData' => $donutPlotData,
-    'heatPlotData' => $heatPlotData,
-    'radarPlotData' => $radarPlotData,
-    'networkPlotData' => $networkPlotData
-);
+// $data = array(
+//     'linePlotData' => $linePlotData,
+//     'barPlotData' => $barPlotData,
+//     'piePlotData' => $piePlotData,
+//     'donutPlotData' => $donutPlotData,
+//     'heatPlotData' => $heatPlotData,
+//     'radarPlotData' => $radarPlotData,
+//     'networkPlotData' => $networkPlotData
+// );
 
 
 // $json_data = json_encode($data);
@@ -221,8 +232,35 @@ $data = array(
 
 // Send the data as a JSON response
 
+
+// Example URLs to send data for each plot type
+$line_plot_url = 'http://example.com/line_plot_endpoint';
+$bar_plot_url = 'http://example.com/bar_plot_endpoint';
+$pie_plot_url = 'http://example.com/pie_plot_endpoint';
+$donut_plot_url = 'http://example.com/donut_plot_endpoint';
+$heat_plot_url = 'http://example.com/heat_plot_endpoint';
+$radar_plot_url = 'http://example.com/radar_plot_endpoint';
+$network_plot_url = 'http://example.com/network_plot_endpoint';
+
+// Generate each type of plot
+$linePlotResponse = generate_line_plot($line_plot_url, $linePlotData);
+$piePlotResponse = generate_pie_plot($pie_plot_url, $piePlotData);
+$donutPlotResponse = generate_donut_plot($donut_plot_url, $donutPlotData);
+$heatPlotResponse = generate_heat_plot($heat_plot_url, $heatPlotData);
+$radarPlotResponse = generate_radar_plot($radar_plot_url, $radarPlotData);
+$networkPlotResponse = generate_network_plot($network_plot_url, $networkPlotData);
+
+$response_data = array(
+    'linePlotResponse' => $linePlotResponse,
+    'piePlotResponse' => $piePlotResponse,
+    'donutPlotResponse' => $donutPlotResponse,
+    'heatPlotResponse' => $heatPlotResponse,
+    'radarPlotResponse' => $radarPlotResponse,
+    'networkPlotResponse' => $networkPlotResponse
+);
+
 header('Content-Type: application/json');
-echo json_encode($data);
+echo json_encode($response_data);
 
 $positiveCount = 0;
 $negativeCount = 0;

@@ -2,12 +2,6 @@ from flask import Flask
 from flask import Blueprint, jsonify, request
 import praw
 import re
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-
 
 reddit_data = Blueprint('reddit_data', __name__)
 
@@ -69,6 +63,10 @@ def get_reddit_data():
                 for comment in submission.comments.list():
                     if hasattr(comment, 'author') and comment.author:
                         author_interactions[post.author.name].add(comment.author.name)
-
-    return jsonify({'posts': posts_data }, 'author_interactions': author_interactions )
+    
+    author_interactions = {author: list(interactions) for author, interactions in author_interactions.items()}
+    for author, interactions in author_interactions.items():
+        author_interactions[author] = list(interactions)
+    combined_data = {'posts': posts_data, 'author_interactions': author_interactions}
+    return jsonify(combined_data)
     
