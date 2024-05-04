@@ -2,11 +2,11 @@
 
 var barData = [];
 
-for (var i = 1; i <= 500; i++) {
+for (var i = 1; i <= 100; i++) {
   barData.push({
     title: "Post " + i,
-    num_comments: Math.floor(Math.random() * 100) + 1, // Random number of comments between 0 and 100
-    interaction: Math.floor(Math.random() * 50) + 1// Random interaction value between 0 and 50
+    num_comments: Math.floor(Math.random() * 100) + 1, // Random number of comments between 1 and 100
+    interaction: Math.floor(Math.random() * 50) + 1// Random interaction value between 1 and 50
   });
 }
 
@@ -45,7 +45,7 @@ function updateBarChart(data) {
       {
         label: 'Interaction Value',
         data: interaction,
-        backgroundColor: 'green'
+        backgroundColor: 'red'
       }]
     },
     options: {
