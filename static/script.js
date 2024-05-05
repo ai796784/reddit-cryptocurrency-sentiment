@@ -87,6 +87,7 @@ document.getElementById("redditForm").addEventListener("reset", function (event)
     }
   }
 });
+
 //   document.getElementById("redditForm").addEventListener("reset", function(event) {
 //     var plotTypes = ["line", "pie", "donut", "heat", "radar", "network"];
 //     plotTypes.forEach(function(plotType) {
