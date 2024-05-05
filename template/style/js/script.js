@@ -13,14 +13,14 @@ document.getElementById("redditForm").addEventListener("reset", function (event)
 
 function fetchDataAndUpdateCharts(subreddit) {
   updatePieChart(pieData);
-  updateLineChart(lineData);
+  // updateLineChart(lineData);
   updateBarChart(barData);
   updateDonutChart(donutData);
   // updateHeatMap();
-  for (const post of radarData) {
-    updateRadarChart(post);
-  }
-  updateNetworkGraph();
+  // for (const post of radarData) {
+  //   updateRadarChart(post);
+  // }
+  // updateNetworkGraph();
 }
 
 
@@ -34,9 +34,9 @@ function clearcontent() {
   //   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   // });
   clearPieChart();
-  clearLineChart();
+  // clearLineChart();
   clearBarChart();
   clearDonutChart();
-  clearRadarChart();
-  clearNetChart();
+  // clearRadarChart();
+  // clearNetChart();
 }

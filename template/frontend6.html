@@ -68,16 +68,14 @@
                         </div>
                     </div>
                 </div>                
-                <div class="col-lg-6">
+                <!-- <div class="col-lg-6">
                     <div id="lineChart" class="chart card">
                         <h2><i class="fas fa-line-chart mr-2"></i> Line Chart</h2>
                         <div class="card-body">
                             <canvas id="lineChartCanvas"></canvas>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-4">
+                </div> -->
                 <div class="col-lg-6">
                     <div id="barChart" class="chart card">
                         <h2><i class="fas fa-chart-column mr-2"></i> Bar Chart</h2>
@@ -86,6 +84,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row mt-4">
                 <div class="col-lg-6">
                     <div id="donutChart" class="chart card">
                         <h2><i class="fas fa-spinner mr-2"></i> Donut Chart</h2>
@@ -94,37 +94,41 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-4">
                 <div class="col-lg-6">
                     <div id="heatMap" class="chart card">
                         <h2><i class="fas fa-table-cells mr-2"></i> Heat Map</h2>
                         <div class="card-body">
-                            <canvas id="heatMapCanvas"></canvas>
+                            <!-- <canvas id="heatMapCanvas"></canvas> -->
+                            <img src="./HeatMap.png">
                         </div>
                     </div>
-                </div>                
+                </div> 
+            </div>
+            <div class="row mt-4">
                 <div class="col-lg-6">
                     <div id="radarChart" class="chart card">
-                        <h2><img src="./style/radar.png" class="mr-2"> Radar Chart</h2>
+                        <h2>Radar Chart</h2>
                         <div class="card-body">
-                            <canvas id="radarChartCanvas"></canvas>
+                            <!-- <canvas id="radarChartCanvas"></canvas> -->
+                            <img src="./Radar.png">
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div id="networkGraph" class="chart card">
                         <h2><i class="fa-solid fa-chart-network"></i> Network Graph</h2>
                         <div class="card-body">
                             <div id="networkGraphContainer">
-                                <canvas id="networkGraphCanvas"></canvas>
+                                <!-- <canvas id="networkGraphCanvas"></canvas> -->
+                                <img src="./Network.png">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- <div class="row mt-4">
+
+            </div> -->
         </div>
     </div>
 
@@ -135,11 +139,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
     <script src="./style/js/script.js"></script>
-    <script src="./style/js/lineChart.js"></script>
+    <!-- <script src="./style/js/lineChart.js"></script> -->
     <script src="./style/js/barChart.js"></script>
     <script src="./style/js/pieChart.js"></script>
     <script src="./style/js/donutChart.js"></script>
-    <script src="./style/js/networkGraph.js"></script>
+    <!-- <script src="./style/js/networkGraph.js"></script> -->
 </body>
 
 </html>
