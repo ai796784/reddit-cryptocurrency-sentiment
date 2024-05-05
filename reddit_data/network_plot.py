@@ -30,8 +30,8 @@ def network_plot_endpoint():
     
     # Generate the network plot
     plt.figure(figsize=(8, 6))
-    nx.draw(G, with_labels=True, node_size=500, node_color='skyblue', font_size=10, font_weight='bold')
-    plt.title('Network Plot')
+    nx.draw(G, with_labels=False, node_size=500, node_color='skyblue')
+    # plt.title('Network Plot')
     plt.tight_layout()
     
 
