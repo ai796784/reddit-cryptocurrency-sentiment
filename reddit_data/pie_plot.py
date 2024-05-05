@@ -12,7 +12,7 @@ TEMP_DIR = 'plots'
 def pie_plot_endpoint():
     # Receive the pie plot data from the PHP request
     pie_plot_data = request.json #['piePlotData']
-    
+
     pie_plot_data = pie_plot_data[0]
 
     # Extract labels and values from the received data

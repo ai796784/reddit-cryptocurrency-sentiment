@@ -5,7 +5,7 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
   
     // Make AJAX request to fetch data from PHP script
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "../../php/search.php", true);
+    xhr.open("POST", "../php/search.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onerror = function() {
       console.error("An error occurred while making the AJAX request.");
@@ -29,7 +29,7 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           //createNetworkGraph(responseData.networkPlotData);
 
           // Define an object to map plot types to their paths
-          var newDirectory = "../../reddit_data/plots/";
+          var newDirectory = "../reddit_data/plots/";
 
           var plotPaths = {
             "line": responseData.linePlotResponse,
