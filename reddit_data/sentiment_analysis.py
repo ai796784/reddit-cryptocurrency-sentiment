@@ -20,7 +20,7 @@ sentiment_analysis = Blueprint('sentiment_analysis', __name__)
 # lgb_regressor = load('model/lgb_regressor.pkl')
 # gb_regressor = load('model/gb_regressor.pkl')
 # xgb_regressor = load('model/xgb_regressor.pkl')
-# sgd_regressor = load('model/sgd_regressor.pkl')
+# sgd_regressor = load('model/sdg_regressor.pkl')
 
 
 rf_regressor_model = load('model/rf_regressor_model.pkl')
