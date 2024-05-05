@@ -12,7 +12,7 @@ require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
 
-$limit = 20;
+$limit = 5;
 
 $subreddit = $_POST['subredditName'];
 

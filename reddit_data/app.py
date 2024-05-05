@@ -7,6 +7,7 @@ from pie_plot import generate_pie_plot
 from donut_plot import generate_donut_plot
 from heat_plot import generate_heat_plot
 from radar_plot import generate_radar_plot
+from network_plot import generate_network_plot
 
 app = Flask(__name__)
 
@@ -19,6 +20,7 @@ app.register_blueprint(generate_pie_plot)
 app.register_blueprint(generate_donut_plot)
 app.register_blueprint(generate_heat_plot)
 app.register_blueprint(generate_radar_plot)
+app.register_blueprint (generate_network_plot)
 
 if __name__ == '__main__':
     app.run(debug=True)

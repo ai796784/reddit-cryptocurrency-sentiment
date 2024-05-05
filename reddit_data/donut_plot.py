@@ -1,6 +1,7 @@
 from flask import Flask, request, Blueprint, send_file
 import matplotlib.pyplot as plt
 import tempfile
+import os
 
 
 generate_donut_plot = Blueprint('generate_donut_plot', __name__)
@@ -33,13 +34,11 @@ def donut_plot_endpoint():
     with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path)
+
+
+    temp_file_path = temp_file.name
+    temp_file_name = os.path.basename(temp_file_path)
     
-    # Return the path to the generated line plot image file
-    return temp_file_path
-    # # Save the plot as an image file
-    # plt.savefig('donut_plot.png')
-    # plt.close()
-    
-    # # Return the path to the generated donut plot image file
-    # return 'donut_plot.png'
+    return temp_file_name  
+
 

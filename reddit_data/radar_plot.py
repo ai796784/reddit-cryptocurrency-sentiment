@@ -2,6 +2,7 @@ from flask import Flask, request, Blueprint, send_file
 import matplotlib.pyplot as plt
 import numpy as np
 import tempfile
+import os
 
 generate_radar_plot = Blueprint('generate_radar_plot', __name__)
 
@@ -49,11 +50,8 @@ def radar_plot_endpoint():
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path)
     
-    # Return the path to the generated line plot image file
-    return temp_file_path
-    # # Save the plot as an image file
-    # plt.savefig('radar_plot.png')
-    # plt.close()
+
+    temp_file_path = temp_file.name
+    temp_file_name = os.path.basename(temp_file_path)
     
-    # # Return the path to the generated radar plot image file
-    # return 'radar_plot.png'
+    return temp_file_name  

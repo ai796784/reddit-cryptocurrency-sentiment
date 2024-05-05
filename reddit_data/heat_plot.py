@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import tempfile
+import os
 
 generate_heat_plot = Blueprint('generate_heat_plot', __name__)
 
@@ -27,8 +28,13 @@ def heat_plot_endpoint():
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path)
     
-    # Return the path to the generated line plot image file
-    return temp_file_path
+
+
+    temp_file_path = temp_file.name
+    temp_file_name = os.path.basename(temp_file_path)
+    
+    return temp_file_name  
+
     # # Save the plot as an image file
     # plt.savefig('heat_plot.png')
     # plt.close()

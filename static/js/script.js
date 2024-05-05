@@ -44,8 +44,20 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
             if (plotPaths.hasOwnProperty(plotType)) {
               var plotPath = plotPaths[plotType];
               var newPath = newDirectory + plotPath
-              document.getElementById(plotType + "ChartCanvas").src = newPath;
+
+              var container = document.getElementById(plotType + "ChartCanvas");
+              
+              // Create a new image element
+              var img = document.createElement('img');
+              
+              // Set the source of the image
+              img.src = newPath;
+              
+              // Append the image to the container div
+              container.appendChild(img);
+            
             }
+
           }
         } else {
           console.error("AJAX request failed");
@@ -57,4 +69,12 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
     var params = "subredditName=" + encodeURIComponent(subredditName);
     xhr.send(params);
   });
-  
+
+
+//   document.getElementById("redditForm").addEventListener("reset", function(event) {
+//     var plotTypes = ["line", "pie", "donut", "heat", "radar", "network"];
+//     plotTypes.forEach(function(plotType) {
+//         var container = document.getElementById(plotType + "ChartCanvas");
+//         container.innerHTML = ""; // Clear the container
+//     });
+// });

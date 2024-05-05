@@ -1,6 +1,7 @@
 from flask import Flask, request, Blueprint, send_file
 import matplotlib.pyplot as plt
 import tempfile
+import os
 
 generate_pie_plot = Blueprint('generate_pie_plot', __name__)
 
@@ -29,8 +30,12 @@ def pie_plot_endpoint():
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path)
     
-    # Return the path to the generated line plot image file
-    return temp_file_path
+
+    temp_file_path = temp_file.name
+    temp_file_name = os.path.basename(temp_file_path)
+    
+    return temp_file_name  
+
     
     # # Save the plot as an image file
     # plt.savefig('pie_plot.png')

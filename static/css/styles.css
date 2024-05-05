@@ -33,41 +33,16 @@ body {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-/*
-/* Line Chart */
-#lineChartCanvas {
-  width: 100%;
-  height: 300px;
+.chart {
+  margin-bottom: 20px;
+  width: 100%; /* Set the width of the chart container */
+  height: 500px; /* Set the height of the chart container */
+  overflow: hidden; /* Hide overflowing content */
 }
 
-/* Bar Chart */
-#barChartCanvas {
-  width: 100%;
-  height: 300px;
-}
-
-/* Pie Chart */
-#pieChartCanvas {
-  width: 100%;
-  height: 300px;
-}
-
-/* Area Chart */
-#areaChartCanvas {
-  width: 100%;
-  height: 300px;
-}
-
-/* Container for the network graph */
-#networkGraphContainer {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden; /* Ensures that edges are not clipped */
-}
-
-/* Style the canvas element inside the container */
-#networkGraphCanvas {
-  width: 100%; /* Ensure the canvas fills the container */
-  height: 400px; /* Set a fixed height for the graph */
+.chart img {
+  width: 100%; /* Make the image fill the container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Scale the image while preserving aspect ratio */
 }
 

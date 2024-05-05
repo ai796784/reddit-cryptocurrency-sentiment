@@ -2,12 +2,13 @@ from flask import Flask, request, Blueprint, send_file
 import matplotlib.pyplot as plt
 import networkx as nx
 import tempfile
+import os
 
 generate_network_plot = Blueprint('generate_network_plot', __name__)
 
 TEMP_DIR = "plots"
 
-@network_plot.route('/generate_network_plot', methods=['POST'])
+@generate_network_plot.route('/generate_network_plot', methods=['POST'])
 def network_plot_endpoint():
     # Receive the network plot data from the PHP request
     network_plot_data = request.json #['networkPlotData']
@@ -38,8 +39,12 @@ def network_plot_endpoint():
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path)
     
-    # Return the path to the generated line plot image file
-    return temp_file_path
+    temp_file_path = temp_file.name
+    temp_file_name = os.path.basename(temp_file_path)
+    
+    return temp_file_name  
+
+    
     # # Save the plot as an image file
     # plt.savefig('network_plot.png')
     # plt.close()
