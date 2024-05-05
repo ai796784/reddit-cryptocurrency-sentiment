@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 document.getElementById("redditForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission behavior
   
@@ -21,18 +20,12 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           var responseData = JSON.parse(xhr.responseText);
   
           var newDirectory = "../reddit_data/plots/";
-=======
-var plotPaths = {};
-
-document.getElementById("redditForm").addEventListener("submit", function (event) {
-  event.preventDefault(); // Prevent default form submission behavior
->>>>>>> a2af801f1213a66cc17fbd09c6b3755e2aaf2d20
 
   var subredditName = document.getElementById("subreddit").value;
 
   // Make AJAX request to fetch data from PHP script
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "../../php/search.php", true);
+  xhr.open("POST", "../php/search.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.onerror = function () {
     console.error("An error occurred while making the AJAX request.");
