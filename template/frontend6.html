@@ -10,9 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="./style/css/style1.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/9.0.0/vis-network.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 
 </head>
 
@@ -25,27 +22,34 @@
             <div class="central-container">
                 <form id="redditForm" class="text-center mb-4">
                     <div class="form-group">
-                        <label for="subreddit"><h2><i class="fas fa-chart-bar mr-2"></i>Select a Subreddit</h2></label><br><br>
+                        <label for="subreddit">
+                            <h2><i class="fas fa-chart-bar mr-2"></i>Select a Subreddit</h2>
+                        </label><br><br>
                         <select id="subreddit" name="subreddit" class="form-control">
-                            <option value="" disabled selected>Select Subreddit</option>                        
-                            <option value="bitcoin">Bitcoin</option>
-                            <option value="btc">BTC</option>
-                            <option value="bitcoinbeginners">BitcoinBeginners</option>
-                            <option value="altcoin">Altcoin</option>
-                            <option value="cryptocurrency">CryptoCurrency</option>
-                            <option value="ethereum">Ethereum</option>
-                            <option value="ethtrader">Ethtrader</option>
-                            <option value="cryptotechnology">CryptoTechnology</option>
-                            <option value="xrp">XRP</option>
-                            <option value="dogecoin">Dogecoin</option>
-                            <option value="cryptomoonshots">CryptoMoonShots</option>
-                            <option value="nft">NFT</option>
-                            <option value="binance">Binance</option>
-                            <option value="cardano">Cardano</option>
-                            <option value="ripple">Ripple</option>
-                            <option value="solana">Solana</option>
-                            <option value="litecoin">Litecoin</option>
-                            <option value="dot">DOT</option>
+                            <option value="" disabled selected>Select Subreddit</option>
+                            <option value="CryptoCurrency">r/CryptoCurrency</option>
+                            <option value="Bitcoin">r/Bitcoin</option>
+                            <option value="Ethereum">r/Ethereum</option>
+                            <option value="Ripple">r/Ripple</option>
+                            <option value="Litecoin">r/Litecoin</option>
+                            <option value="Altcoin">r/Altcoin</option>
+                            <option value="CryptoMarkets">r/CryptoMarkets</option>
+                            <option value="CryptoCurrencyTrading">r/CryptoCurrencyTrading</option>
+                            <option value="CryptoCurrencyNews">r/CryptoCurrencyNews</option>
+                            <option value="CryptoTechnology">r/CryptoTechnology</option>
+                            <option value="ICO">r/ICO</option>
+                            <option value="DeFi">r/DeFi</option>
+                            <option value="BTC">r/BTC</option>
+                            <option value="BitcoinBeginners">r/BitcoinBeginners</option>
+                            <option value="Ethtrader">r/Ethtrader</option>
+                            <option value="XRP">r/XRP</option>
+                            <option value="Dogecoin">r/Dogecoin</option>
+                            <option value="CryptoMoonShots">r/CryptoMoonShots</option>
+                            <option value="NFT">r/NFT</option>
+                            <option value="Binance">r/Binance</option>
+                            <option value="Cardano">r/Cardano</option>
+                            <option value="Solana">r/Solana</option>
+                            <option value="DOT">r/DOT</option>
                         </select>
                     </div>
                     <div class="button-container">
@@ -57,30 +61,22 @@
         </div>
 
 
-        
+
         <div class="lower-section">
             <div class="row">
                 <div class="col-lg-6">
-                    <div id="pieChart" class="chart card">
+                    <div id="sentimentPieChart" class="chart card">
                         <h2><i class="fas fa-chart-pie mr-2"></i> Sentiment Analysis Result</h2>
                         <div class="card-body">
-                            <canvas id="pieChartCanvas"></canvas>
+                            <div id="pieChartCanvas"></div>
                         </div>
                     </div>
-                </div>                
-                <!-- <div class="col-lg-6">
-                    <div id="lineChart" class="chart card">
-                        <h2><i class="fas fa-line-chart mr-2"></i> Line Chart</h2>
-                        <div class="card-body">
-                            <canvas id="lineChartCanvas"></canvas>
-                        </div>
-                    </div>
-                </div> -->
+                </div>
                 <div class="col-lg-6">
                     <div id="barChart" class="chart card">
                         <h2><i class="fas fa-chart-column mr-2"></i> Bar Chart</h2>
                         <div class="card-body">
-                            <canvas id="barChartCanvas"></canvas>
+                            <div id="barChartCanvas"></div>
                         </div>
                     </div>
                 </div>
@@ -90,7 +86,7 @@
                     <div id="donutChart" class="chart card">
                         <h2><i class="fas fa-spinner mr-2"></i> Donut Chart</h2>
                         <div class="card-body">
-                            <canvas id="donutChartCanvas"></canvas>
+                            <div id="donutChartCanvas"></div>
                         </div>
                     </div>
                 </div>
@@ -98,19 +94,18 @@
                     <div id="heatMap" class="chart card">
                         <h2><i class="fas fa-table-cells mr-2"></i> Heat Map</h2>
                         <div class="card-body">
-                            <!-- <canvas id="heatMapCanvas"></canvas> -->
-                            <img src="./HeatMap.png">
+                            <div id="heatMapCanvas"></div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="row mt-4">
                 <div class="col-lg-6">
                     <div id="radarChart" class="chart card">
+                        <!-- <h2><img src="./style/radar.png" class="mr-2"> Radar Chart</h2> -->
                         <h2>Radar Chart</h2>
                         <div class="card-body">
-                            <!-- <canvas id="radarChartCanvas"></canvas> -->
-                            <img src="./Radar.png">
+                            <div id="radarChartCanvas"></div>
                         </div>
                     </div>
                 </div>
@@ -118,17 +113,11 @@
                     <div id="networkGraph" class="chart card">
                         <h2><i class="fa-solid fa-chart-network"></i> Network Graph</h2>
                         <div class="card-body">
-                            <div id="networkGraphContainer">
-                                <!-- <canvas id="networkGraphCanvas"></canvas> -->
-                                <img src="./Network.png">
-                            </div>
+                            <div id="networkGraphCanvas"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="row mt-4">
-
-            </div> -->
         </div>
     </div>
 
@@ -138,12 +127,21 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-    <script src="./style/js/script.js"></script>
-    <!-- <script src="./style/js/lineChart.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-heatmap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    
+    <script src="../static/script.js"></script>
+    <!-- <script src="./style/js/pieChart.js"></script>
+    <script src="./style/js/lineChart.js"></script>
     <script src="./style/js/barChart.js"></script>
-    <script src="./style/js/pieChart.js"></script>
     <script src="./style/js/donutChart.js"></script>
-    <!-- <script src="./style/js/networkGraph.js"></script> -->
+    <script src="./style/js/heatMap.js"></script>
+    <script src="./style/js/radarChart.js"></script>
+    <script src="./style/js/networkGraph.js"></script> -->
 </body>
 
 </html>
