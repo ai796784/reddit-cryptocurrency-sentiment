@@ -133,9 +133,9 @@ foreach ($posts as $post) {
 mysqli_close($conn);
 
 $piePlotData[] = array(
-    'Positive' => $positiveCount / $limit,
-    'Negative' => $negativeCount / $limit,
-    'Neutral' => $neutralCount / $limit,
+    'Positive' => $positiveCount,
+    'Negative' => $negativeCount,
+    'Neutral' => $neutralCount,
 
 );
 

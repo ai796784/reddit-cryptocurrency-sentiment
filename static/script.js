@@ -19,16 +19,6 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           
           var responseData = JSON.parse(xhr.responseText);
   
-          // Call functions to create charts with the received data
-          // createLineChart(responseData.linePlotData);
-          //createBarChart(responseData.barPlotData);
-          // createPieChart(responseData.piePlotData);
-          //createHeatMap(responseData.heatPlotData);
-          // createDonutChart(responseData.piePloData);
-          // createRadarChart(responseData.radarPlotData);
-          //createNetworkGraph(responseData.networkPlotData);
-
-          // Define an object to map plot types to their paths
           var newDirectory = "../reddit_data/plots/";
 
           var plotPaths = {

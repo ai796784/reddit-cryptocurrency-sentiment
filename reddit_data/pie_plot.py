@@ -22,8 +22,17 @@ def pie_plot_endpoint():
     # Generate the pie plot
     plt.figure(figsize=(8, 6))
     plt.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
-    plt.title('Pie Plot')
     plt.tight_layout()
+
+    plt.figure(figsize=(8, 6))
+    patches, texts, autotexts = plt.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
+    plt.title('Pie Plot')
+    
+    plt.legend(patches, labels, loc="upper left")
+    # Annotate percentages
+    for i, (percentage, label) in enumerate(zip(autotexts, labels)):
+        percentage.set_text(f:"({percentage.get_text()})")
+        plt.tight_layout()
 
 
     with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:
