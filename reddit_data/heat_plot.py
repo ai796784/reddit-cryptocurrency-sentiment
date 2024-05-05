@@ -20,7 +20,7 @@ def heat_plot_endpoint():
     # Generate the heat plot
     plt.figure(figsize=(10, 6))
     sns.heatmap(df.corr(), annot=True, cmap="coolwarm")
-    plt.title('Heat Plot')
+    # plt.title('Heat Plot')
     plt.tight_layout()
     
 

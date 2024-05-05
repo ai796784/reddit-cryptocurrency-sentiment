@@ -35,12 +35,16 @@ def radar_plot_endpoint():
     ax.plot(angles, values, color='blue', linewidth=2)
     
     # Add labels
-    ax.set_yticklabels([])
+    # ax.set_yticklabels([])
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(labels)
-    
+    ax.set_yticks(np.linspace(0, 1, 6))  # Set y-ticks from 0.0 to 1.0 with 6 intervals
+    ax.set_yticklabels([f"{value:.1f}" for value in np.linspace(0, 1, 6)])  # Set y-tick labels with one decimal place
+    for angle, value in zip(angles[:-1], values[:-1]):
+        ax.text(angle, value, f"{value:.1f}", ha='center', va='center', fontsize=10)
+
     # Title
-    plt.title('Radar Plot')
+    # plt.title('Radar Plot')
     
     # Tight layout
     plt.tight_layout()
