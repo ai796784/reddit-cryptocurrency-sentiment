@@ -43,7 +43,7 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
                   "radar": responseData.radarPlotResponse,
                   "network": responseData.networkPlotResponse
                 };
-                
+
                 for (var plotType in plotPaths) {
                   if (plotPaths.hasOwnProperty(plotType)) {
                     var plotPath = plotPaths[plotType];
@@ -69,9 +69,9 @@ document.getElementById("redditForm").addEventListener("submit", function(event)
           // Encode data to be sent in the request body
           var params = "subredditName=" + encodeURIComponent(subredditName);
           xhr.send(params);
-        });
+        }
       }
-    }
+    });
         
     document.getElementById("redditForm").addEventListener("reset", function (event) {
       var plotTypes = ["line", "pie", "donut", "heat", "radar", "network"];
