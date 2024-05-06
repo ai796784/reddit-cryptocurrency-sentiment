@@ -19,7 +19,7 @@ def line_plot_endpoint():
     y_num_comments = []
     y_interaction = []
     for data_point in line_plot_data:
-        x_values.append(data_point['x_value'])
+        # x_values.append(data_point['x_value'])
         y_num_comments.append(data_point['num_comments'])
         y_interaction.append(data_point['interaction'])
 

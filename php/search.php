@@ -12,7 +12,7 @@ require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
 
-$limit = 5;
+$limit = 1;
 
 $subreddit = $_POST['subredditName'];
 
@@ -30,7 +30,7 @@ $radar_plot_url = $base_url . 'generate_radar_plot';
 $network_plot_url = $base_url . 'generate_network_plot';
 
 
-$threshold = 0.3;
+$threshold = 0.2;
 
 $positiveCount = 0;
 $negativeCount = 0;
@@ -69,6 +69,7 @@ foreach ($posts as $post) {
     $creation_time = insertPost($conn, $subreddit_id, $post);
 
     $linePlotData[] = array(
+        'creation_time' => $creation_time,
         'num_comments' => $post['num_comments'],
         'interaction' => $post['interaction']
     );
@@ -147,10 +148,10 @@ $donutPlotData[] = array(
 );
 
 $radarPlotData[] = array(
-    'joy' => $joy_mean / $limit,
-    'sadness' => $sadness_mean / $limit,
-    'anger' => $anger_mean / $limit,
-    'optimism' => $optimism_mean / $limit
+    'joy' => $joy_mean ,
+    'sadness' => $sadness_mean,
+    'anger' => $anger_mean ,
+    'optimism' => $optimism_mean
 );
 
 $networkPlotData = array();
