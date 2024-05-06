@@ -26,12 +26,12 @@ def pie_plot_endpoint():
 
     plt.figure(figsize=(8, 6))
     patches, texts, autotexts = plt.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
-    plt.title('Pie Plot')
     
     plt.legend(patches, labels, loc="upper left")
+    
     # Annotate percentages
     for i, (percentage, label) in enumerate(zip(autotexts, labels)):
-        percentage.set_text(f:"({percentage.get_text()})")
+        percentage.set_text(f"({percentage.get_text()})")
         plt.tight_layout()
 
 

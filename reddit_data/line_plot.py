@@ -21,13 +21,19 @@ def line_plot_endpoint():
         y_values.append(data_point['interaction'])
     
     # Generate the line plot
-    plt.figure(figsize=(8, 6))
-    plt.plot(x_values, y_values, marker='o', linestyle='-')
-    plt.title('Line Plot')
+    plt.bar(range(len(x_values)), y_values, color='skyblue', alpha=0.7, label='Interaction Rate')
     plt.xlabel('Number of Comments')
-    plt.ylabel('Interaction')
-    plt.grid(True)
+    plt.ylabel('Interaction Rate')
+    plt.xticks(range(len(x_values)), x_values)
+    plt.legend()
     plt.tight_layout()
+
+    # plt.figure(figsize=(8, 6))
+    # plt.plot(x_values, y_values, marker='o', linestyle='-')
+    # plt.xlabel('Number of Comments')
+    # plt.ylabel('Interaction')
+    # plt.grid(True)
+    # plt.tight_layout()
     
 
     with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:

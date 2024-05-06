@@ -8,14 +8,23 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
+# import os
+# import tensorflow as tf
+
+# # Suppress TensorFlow warnings
+# os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
+
+
 # import tensorflow_hub as hub
+
 
 
 
 sentiment_analysis = Blueprint('sentiment_analysis', __name__)
 
 
-# embed_model = ub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
+# embed_model = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
 
 # lgb_regressor = load('model/lgb_regressor.pkl')
 # gb_regressor = load('model/gb_regressor.pkl')

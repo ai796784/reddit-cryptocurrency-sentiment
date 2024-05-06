@@ -27,6 +27,7 @@ def heat_plot_endpoint():
     with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path)
+
     
 
 

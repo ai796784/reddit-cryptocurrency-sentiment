@@ -21,27 +21,24 @@ def radar_plot_endpoint():
     
     # Number of variables
     num_vars = len(labels)
+    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False)
     
-    # Create a list of angles for each variable
-    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+    values.append(values[0])
+    angles = np.append(angles, angles[0])
     
-    # The radar chart is circular, so we need to "complete the loop" and append the start value to the end.
-    values += values[:1]
-    angles += angles[:1]
-    
-    # Generate the radar plot
     fig, ax = plt.subplots(figsize=(8, 6), subplot_kw=dict(polar=True))
-    ax.fill(angles, values, color='blue', alpha=0.25)
+    ax.fill(angles, values, color='blue', alpha=0.25, label='Data')
     ax.plot(angles, values, color='blue', linewidth=2)
     
-    # Add labels
-    # ax.set_yticklabels([])
+    
     ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(labels)
-    ax.set_yticks(np.linspace(0, 1, 6))  # Set y-ticks from 0.0 to 1.0 with 6 intervals
-    ax.set_yticklabels([f"{value:.1f}" for value in np.linspace(0, 1, 6)])  # Set y-tick labels with one decimal place
+    ax.set_xticklabels(labels, fontsize=12)
+    ax.set_yticks(np.linspace(0, 1, 6))
+    ax.set_yticklabels([f"{val:.1f}" for val in np.linspace(0, 1, 6)], fontsize=10)
+    
     for angle, value in zip(angles[:-1], values[:-1]):
         ax.text(angle, value, f"{value:.1f}", ha='center', va='center', fontsize=10)
+
 
     # Title
     # plt.title('Radar Plot')
