@@ -27,19 +27,10 @@ def heat_plot_endpoint():
     with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path)
-
     
-
 
     temp_file_path = temp_file.name
     temp_file_name = os.path.basename(temp_file_path)
     
     return temp_file_name  
-
-    # # Save the plot as an image file
-    # plt.savefig('heat_plot.png')
-    # plt.close()
-    
-    # # Return the path to the generated heat plot image file
-    # return 'heat_plot.png'
 

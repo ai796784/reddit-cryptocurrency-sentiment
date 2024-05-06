@@ -31,8 +31,6 @@ def network_plot_endpoint():
     # Generate the network plot
     plt.figure(figsize=(8, 6))
     nx.draw(G, with_labels=False, node_size=500, node_color='skyblue')
-    # plt.title('Network Plot')
-    plt.tight_layout()
     
 
     with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:

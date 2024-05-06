@@ -19,21 +19,18 @@ def pie_plot_endpoint():
     labels = list(pie_plot_data.keys())
     values = list(pie_plot_data.values())
     
-    # Generate the pie plot
+    nonzero_labels = [label for label, value in zip(labels, values) if value != 0]
+    nonzero_values = [value for value in values if value != 0]
+    
     plt.figure(figsize=(8, 6))
-    plt.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
+    patches, texts, autotexts = plt.pie(nonzero_values, labels=nonzero_labels, autopct='%1.1f%%', startangle=90, labeldistance=1.15)
+    plt.legend(patches, nonzero_labels, loc="upper left")
+
     plt.tight_layout()
-
-    plt.figure(figsize=(8, 6))
-    patches, texts, autotexts = plt.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
     
-    plt.legend(patches, labels, loc="upper left")
-    
-    # Annotate percentages
-    for i, (percentage, label) in enumerate(zip(autotexts, labels)):
-        percentage.set_text(f"({percentage.get_text()})")
-        plt.tight_layout()
-
+    for autotext in autotexts:
+        autotext.set_color('white')  
+        autotext.set_fontsize(10)  
 
     with tempfile.NamedTemporaryFile(suffix='.png', dir=TEMP_DIR, delete=False) as temp_file:
         temp_file_path = temp_file.name
@@ -46,11 +43,4 @@ def pie_plot_endpoint():
     return temp_file_name  
 
     
-    # # Save the plot as an image file
-    # plt.savefig('pie_plot.png')
-    # plt.close()
-    
-    # # Return the path to the generated pie plot image file
-    # return 'pie_plot.png'
-
 

@@ -12,7 +12,7 @@ require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
 
-$limit = 1;
+$limit = 5;
 
 $subreddit = $_POST['subredditName'];
 
@@ -156,47 +156,6 @@ $radarPlotData[] = array(
 
 $networkPlotData = array();
 
-
-// // Define nodes and edges arrays
-// $nodes = array();
-// $edges = array();
-
-// Iterate over author interactions
-// foreach ($author_interactions as $author => $interactions) {
-//     // Add author as a node
-//     $nodes[] = array(
-//         'id' => $author,
-//         'label' => $author,
-//         // You can add additional properties to nodes if needed
-//     );
-
-//     // Iterate over interactions
-//     foreach ($interactions as $interaction) {
-//         // Add interaction as a node if it doesn't already exist
-//         if (!in_array($interaction, array_column($nodes, 'id'))) {
-//             $nodes[] = array(
-//                 'id' => $interaction,
-//                 'label' => $interaction,
-//                 // You can add additional properties to nodes if needed
-//             );
-//         }
-
-//         // Add edge between author and interaction
-//         $edges[] = array(
-//             'from' => $author,
-//             'to' => $interaction,
-//             // You can add additional properties to edges if needed
-//         );
-//     }
-// }
-
-// // Combine nodes and edges into a single array
-// $networkPlotData = array(
-//     'nodes' => $nodes,
-//     'edges' => $edges,
-// );
-
-
 // Initialize arrays to hold nodes and edges
 $nodes = [];
 $edges = [];
@@ -237,47 +196,6 @@ $networkPlotData = array(
 );
 
 
-// $author_interactions = $posts['author_interaction'];
-
-// foreach ($author_interactions as $author => $interacted_users) {
-//     // For each interaction, create an edge from the author to the interacted user
-//     foreach ($interacted_users as $interacted_user) {
-//         // Add the edge to the array
-//         $networkPlotData[] = array(
-//             'source' => $author,
-//             'target' => $interacted_user
-//         );
-//     }
-// }
-
-// $data = array(
-//     'linePlotData' => $linePlotData,
-//     'barPlotData' => $barPlotData,
-//     'piePlotData' => $piePlotData,
-//     'donutPlotData' => $donutPlotData,
-//     'heatPlotData' => $heatPlotData,
-//     'radarPlotData' => $radarPlotData,
-//     'networkPlotData' => $networkPlotData
-// );
-
-
-// $json_data = json_encode($data);
-
-// // Check if conversion was successful
-// if ($json_data === false) {
-//     // Handle error if conversion failed
-//     echo "Error: Unable to encode data to JSON";
-// } else {
-//     // Set the appropriate header for JSON response
-//     header('Content-Type: application/json');
-//     // Echo the JSON data
-//     echo $json_data;
-// }
-
-// Send the data as a JSON response
-
-
-
 // Generate each type of plot
 $linePlotResponse = generate_line_plot($line_plot_url, $linePlotData);
 $piePlotResponse = generate_pie_plot($pie_plot_url, $piePlotData);
@@ -296,6 +214,7 @@ $response_data = array(
 );
 
 
+error_log('Response Data: ' . print_r($response_data, true));
 
 header('Content-Type: application/json');
 echo json_encode($response_data);

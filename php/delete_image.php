@@ -1,4 +1,11 @@
 <?php
+
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+echo("Hello");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["imagePath"])) {
         // This is the POST request to delete an image
@@ -37,5 +44,4 @@ function handleDeleteImageRequest() {
         echo "Image not found";
     }
 }
-
 ?>
