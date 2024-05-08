@@ -12,7 +12,7 @@ require_once 'database/connect_db.php';
 require_once 'database/insert_db.php';
 
 
-$limit = 5;
+$limit = 10;
 
 $subreddit = $_POST['subredditName'];
 
@@ -148,9 +148,9 @@ $donutPlotData[] = array(
 );
 
 $radarPlotData[] = array(
-    'joy' => $joy_mean ,
+    'joy' => $joy_mean,
     'sadness' => $sadness_mean,
-    'anger' => $anger_mean ,
+    'anger' => $anger_mean,
     'optimism' => $optimism_mean
 );
 
