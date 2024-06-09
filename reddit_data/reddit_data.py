@@ -6,9 +6,9 @@ import re
 reddit_data = Blueprint('reddit_data', __name__)
 
 # Initialize the Reddit API instance
-reddit = praw.Reddit(client_id='DP78tG9HeZiMQg',
-                     client_secret='xF80XIHboP51Lq63viNLTzxJrmE',
-                     user_agent='RedditWebScraping')
+reddit = praw.Reddit(client_id='',
+                     client_secret='',
+                     user_agent='')
 
 def classify_media_type(post):
     if post.is_self:
